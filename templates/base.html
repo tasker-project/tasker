@@ -1,0 +1,46 @@
+<! DOCTYPE html>
+<!-- This is the base template which includes head, navigation, and footer, should be extended by all routed pages -->
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% if title %}
+    <title>{{title}} - TaskerApp</title>
+    {% else %}
+    <title>Welcome to Tasker!</title>
+    {% endif %}
+    <link href="../static/css/main.css" rel="stylesheet">
+    <link rel="icon" href="../static/img/icon.png">
+    <script src="https://kit.fontawesome.com/51024ecd26.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Racing+Sans+One&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="three-row">
+      <nav class="three left main-nav">
+        <button>+Template</button>
+        <button>+Task</button>
+        <h2>Tasks By: <span class="red-txt">{{ user.view }}</span> <a href=""><i style="font-size: 1em;" class="far fa-edit"></i></a></h2>
+      </nav>
+      <div class="mobile-nav">
+        <i class="fas fa-ellipsis-v"></i>
+        <!--<a href="">Logout</a>
+        <a href="">Archive</a>-->
+      </div>
+      <div align="center" class="three">
+        <a href="{{ url_for('user.home') }}"><img class="logo" src="../static/img/icon.png" alt="Tasker Icon"/></a>
+        <a href="{{ url_for('user.home')}}"><h1>Tasker<span class="red-txt">App</span></h1></a>
+      </div>
+      <nav class="three right main-nav">
+        <a href="{{ url_for('job_template.templates') }}">Templates</a>
+        <a href="">Archive</a>
+        <a href="">Logout</a>
+      </nav>
+    </header>
+    <main>
+      <!-- content from inheriting templates goes in block content area -->
+    {% block content %}
+    {% endblock %}
+    </main>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../static/js/vendor/jquery-3.5.1.min.js"><\/script>')</script>
+  </body>
+</html>

@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<section id="jobTemplatesList" class="hidden include">
+  <h2>Job Templates</h2>
+  {% for template in templates %}
+  <div class="list-template">
+    <a href=""><strong>{{ template.title }}</strong></a><a href=""> <i style="font-size: 1em;" class="far fa-edit"></i></a>
+  </div>
+  {% endfor %}
+</section>
+{% endblock %}

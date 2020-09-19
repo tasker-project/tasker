@@ -1,0 +1,180 @@
+html {
+  background: #000;
+}
+
+body {
+  color: #fff;
+  font-family: 'Open Sans', sans-serif;
+  padding: 2em;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Racing Sans One', cursive;
+}
+
+h1, h2 {
+  color: #00aaad;
+}
+
+.red-txt {
+  color: #7a1611;
+}
+
+h3, h4, h5 {
+  color: #7a1611;
+}
+
+a {
+  color: #00aaad;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #7a1611;
+}
+
+nav a, .list-template i {
+  color: #7a1611;
+  font-weight: bold;
+  padding: .5em;
+}
+
+nav a:hover, .list-template i:hover {
+  color: #00aaad;
+  cursor: pointer;
+}
+
+button {
+  background: #00aaad;
+  border-left: 2px solid #05f6fa;
+  border-top: 2px solid #05f6fa;
+  border-bottom: 2px solid #00595a;
+  border-right: 2px solid #00595a;
+  border-radius: 5px;
+  color: #ffffff;
+  cursor: pointer;
+  font-family: 'Racing Sans One', cursive;
+  padding: 1%;
+  width: 100px;
+}
+
+button:hover {
+  color: #7a1611;
+}
+
+.logo {
+  width: 50%;
+}
+
+.title {
+  text-align: center;
+}
+
+.col-centered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mobile-nav button {
+  margin: 1em;
+  width: 80%;
+}
+
+i {
+    color: #00aaad;
+    font-size: 2em;
+}
+
+.main-nav {
+  display: none;
+}
+
+/* HOME */
+
+.task {
+  border: 1px solid #fff;
+  border-radius: 5px;
+  margin: .25em;
+  padding: 1em;
+}
+
+.task-name {
+  font-family: 'Racing Sans One', cursive;
+  font-size: 1.5em;
+}
+
+.snooze {
+  margin: 1em;
+}
+
+/* Includes Sections Styles */
+
+.include {
+  text-align: center;
+}
+
+/* Job Templates List */
+
+
+/* break points for ipad, laptop/desktop, and large screens */
+@media all and (min-width: 750px){
+  .logo {
+    width: 100px;
+  }
+
+  .main-nav {
+    display: block;
+  }
+
+  .mobile-nav {
+    display: none;
+  }
+
+  .three-row {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+  }
+
+  .five-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .left {
+    text-align: left;
+  }
+
+  .right {
+    text-align: right;
+  }
+
+  .three {
+    width: 33%;
+  }
+
+  .five {
+    padding: .5em;
+    width: 20%;
+  }
+
+  .title {
+    text-align: left;
+  }
+}
+
+@media all and (min-width: 1200px){
+
+}
+
+@media all and (min-width: 1500px){
+  body {
+      padding-left: 10em;
+      padding-right: 10em;
+  }
+}
