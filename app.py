@@ -24,6 +24,9 @@ def create_app(config_object='tasker.settings'):
     from tasker import job_template
     app.register_blueprint(job_template.views.bp)
 
+    from tasker import task
+    app.register_blueprint(task.views.bp)
+
     @app.cli.command('create-db')
     def create_db():
         with create_app().app_context():

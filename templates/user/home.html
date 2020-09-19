@@ -7,10 +7,10 @@
 </div>
 
 <section id="home-main" class="five-row">
-  {% for date in dates %}
+  {% for task in tasks %}
   <div align="center" class="five task">
-    <a href='' class="task-name"><strong>Task Name</strong></a>
-    <p>Due: {{ date }}</p>
+    <a href="{{ url_for('task.task_detail', id=task.id) }}" class="task-name"><strong>{{ task.template.title }}</strong></a>
+    <p>Due: {{ task.due_date }}</p>
     <button class='snooze'>Snooze</button>
     <br><a class="delete" href="" class="delete">Delete</a>
   </div>

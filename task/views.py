@@ -1,14 +1,11 @@
 from flask import Blueprint, render_template
 from tasker.database import db
-#from tasker.home.forms import LoginForm, RegistrationForm
+#from tasker.task.forms import EditTaskForm, SnoozeTaskForm
 
-bp = Blueprint('user', __name__, static_folder='../static')
+bp = Blueprint('task', __name__, static_folder='../static')
 
-@bp.route('/')
-
-@bp.route('/home')
-#@login_required
-def home():
+@bp.route('/task_detail/<id>')
+def task_detail(id):
     user = {
     'username': 'test@testing.com', 'email' : 'test@testing.com', 'timezone' : 'EST', 'view' : 'Month'
     }
@@ -26,4 +23,7 @@ def home():
     {'id' : 5, 'due_date' : '10.5.2020', 'template': templates[2]},
     {'id' : 6, 'due_date' : '10.10.2020', 'template': templates[1]},
     ]
-    return render_template('user/home.html', title="Home", tasks=tasks, user=user)
+
+    task = tasks[int(id)]
+
+    return render_template("task/task-detail.html", title="Task Detail", user=user, task=task)
