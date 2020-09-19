@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="include">
+<h2>{{ task.title }}</h2>
+<p><strong class="red-txt">Due:</strong> {{ task.due_date }}</p>
+<p><strong class="red-txt"><span class="red-txt">Description: </strong> {{ task.template.description }}</p>
+<button class='snooze'>Snooze</button>
+<br><a class="delete" href="" class="delete">Delete</a>
+</section>
+{% endblock %}

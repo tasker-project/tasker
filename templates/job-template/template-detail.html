@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="include">
+<h2>{{ template.title }}</h2>
+<p><strong class="red-txt">Due Every:</strong> {{ template.interval }} {{ template.interval_type}}</p>
+<p><strong class="red-txt">Start Date:</strong> {{ template.start_date }}</p>
+<p><strong class="red-txt"><span class="red-txt">Description: </strong> {{ template.description }}</p>
+<a href=""> <i style="font-size: 2em;" class="far fa-edit"></i></a>
+</section>
+{% endblock %}

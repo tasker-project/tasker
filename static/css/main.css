@@ -24,22 +24,22 @@ h3, h4, h5 {
   color: #7a1611;
 }
 
-a {
+a, i {
   color: #00aaad;
   text-decoration: none;
 }
 
-a:hover {
+a:hover, i:hover {
   color: #7a1611;
 }
 
-nav a, .list-template i {
+nav a, .list-template i, .delete {
   color: #7a1611;
   font-weight: bold;
   padding: .5em;
 }
 
-nav a:hover, .list-template i:hover {
+nav a:hover, .list-template i:hover, .delete:hover {
   color: #00aaad;
   cursor: pointer;
 }
