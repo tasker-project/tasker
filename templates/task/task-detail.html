@@ -5,7 +5,7 @@
 <h2>{{ task.template.title }}</h2>
 <p><strong class="red-txt">Due:</strong> {{ task.due_date }}</p>
 <p><strong class="red-txt"><span class="red-txt">Description: </strong> {{ task.template.description }}</p>
-<button class='snooze'>Snooze</button>
-<br><a class="delete" href="" class="delete">Delete</a>
+<a href="{{ url_for('task.snooze', id=task.id) }}" class='snooze link-btn'>Snooze</a>
+<br><a class="delete" href="{{ url_for('task.delete_task', id=task.id) }}" class="delete">Delete</a>
 </section>
 {% endblock %}
