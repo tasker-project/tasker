@@ -12,8 +12,8 @@
   <div align="center" class="five task">
     <a href="{{ url_for('task.task_detail', id=task.id) }}" class="task-name"><strong>{{ task.template.title }}</strong></a>
     <p>Due: {{ task.due_date }}</p>
-    <button class='snooze'>Snooze</button>
-    <br><a class="delete" href="" class="delete">Delete</a>
+    <a href="{{ url_for('task.snooze', id=task.id) }}" class='snooze link-btn'>Snooze</a>
+    <br><a class="delete" href="{{ url_for('task.delete_task', id=task.id) }}" class="delete">Delete</a>
   </div>
   {% endfor %}
 </section>

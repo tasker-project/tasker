@@ -34,6 +34,17 @@
         <a href="">Logout</a>
       </nav>
     </header>
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+  <div class="flashed-msg">
+    <ul class="error-msg">
+      {% for message in messages %}
+      <li><em>{{ message }}</em></li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+  {% endwith %}
     <main>
       <!-- content from inheriting templates goes in block content area -->
     {% block content %}

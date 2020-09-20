@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, flash, redirect, url_for
 from tasker.database import db
 #from tasker.task.forms import EditTaskForm, SnoozeTaskForm
 
@@ -33,7 +33,20 @@ def task_detail(id):
 def add_task():
     return render_template('task/add-task.html', title="Create Task")
 
+@bp.route('/snooze/<id>')
+#@login_required
+def snooze(id):
+    id=id
+    return render_template('task/snooze.html', title="Snooze", id=id)
+
 @bp.route('/archive')
 #@login_required
 def archive():
     return render_template('task/archive.html', title="Archive")
+
+@bp.route('/delete_task/<id>')
+#@login_required
+def delete_task(id):
+    id=id
+    flash("Task deleted: " + id)
+    return redirect(url_for('user.home'))

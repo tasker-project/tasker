@@ -6,6 +6,7 @@
 <p><strong class="red-txt">Due Every:</strong> {{ template.interval }} {{ template.interval_type}}</p>
 <p><strong class="red-txt">Start Date:</strong> {{ template.start_date }}</p>
 <p><strong class="red-txt"><span class="red-txt">Description: </strong> {{ template.description }}</p>
-<a href=""> <i style="font-size: 2em;" class="far fa-edit"></i></a>
+<a href="{{ url_for('job_template.edit_template', id=template.title) }}"> <i style="font-size: 2em;" class="far fa-edit"></i></a>
+<a href="{{ url_for('job_template.delete_template', id=template.id) }}" class="delete">Delete</a>
 </section>
 {% endblock %}

@@ -17,11 +17,11 @@ h1, h2 {
 }
 
 .red-txt {
-  color: #7a1611;
+  color: #ca241c;
 }
 
 h3, h4, h5 {
-  color: #7a1611;
+  color: #ca241c;
 }
 
 a, i {
@@ -30,11 +30,11 @@ a, i {
 }
 
 a:hover, i:hover {
-  color: #7a1611;
+  color: #ca241c;
 }
 
 nav a, .list-template i, .delete {
-  color: #7a1611;
+  color: #ca241c;
   font-weight: bold;
   padding: .5em;
 }
@@ -59,7 +59,7 @@ button, input[type="submit" i], .link-btn {
 }
 
 button:hover, .link-btn:hover {
-  color: #7a1611;
+  color: #ca241c;
 }
 
 .link-btn  {
@@ -94,6 +94,12 @@ i {
 
 .main-nav {
   display: none;
+}
+
+.error-msg {
+  /* color: red; */
+  color: #ca241c;
+  list-style: none;
 }
 
 /* HOME */

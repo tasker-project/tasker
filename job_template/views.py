@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, redirect, url_for, flash
 from tasker.database import db
 #from tasker.job_template.forms import JobTemplateForm
 
@@ -23,6 +23,7 @@ def add_template():
     return render_template('job-template/add-template.html', title="Create Template")
 
 @bp.route('/template_detail/<id>')
+#@login_required
 def template_detail(id):
     user = {
     'username': 'test@testing.com', 'email' : 'test@testing.com', 'timezone' : 'EST', 'view' : 'Month'
@@ -34,3 +35,16 @@ def template_detail(id):
     ]
     template = templates[int(id)]
     return render_template('job-template/template-detail.html', title='Template Details', user=user, template=template)
+
+@bp.route('/edit_template/<id>')
+#@login_required
+def edit_template(id):
+    id = id
+    return render_template('job-template/edit-template.html', title="Edit Template", id=id)
+
+@bp.route('/delete_template/<id>')
+#@login_required
+def delete_template(id):
+    id=id
+    flash("Template deleted")
+    return redirect(url_for('job_template.templates'))
