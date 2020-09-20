@@ -87,6 +87,17 @@ button:hover, .link-btn:hover {
   width: 80%;
 }
 
+#mobileNavContent {
+  border: 1px solid #fff;
+  border-radius: 5px;
+  margin: 1em;
+  padding: 1em;
+}
+
+#mobileNavContent .link-btn{
+  margin-bottom: .5em;
+}
+
 i {
     color: #00aaad;
     font-size: 2em;

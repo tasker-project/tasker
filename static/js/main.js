@@ -10,5 +10,6 @@ $(document).ready(function(){
   }
 
   toggleSection('#changeViewTrigger', '#changeView');
+  toggleSection('#mobileNavTrigger', '#mobileNavContent');
 
 });
