@@ -16,8 +16,8 @@
   <body>
     <header class="three-row">
       <nav class="three left main-nav">
-        <button>+Template</button>
-        <button>+Task</button>
+        <a href="{{ url_for('job_template.add_template') }}"><div class="link-btn">+Template</div></a>
+        <a href="{{ url_for('task.add_task') }}"><div class="link-btn">+Task</div></a>
       </nav>
       <div class="mobile-nav">
         <i class="fas fa-ellipsis-v"></i>
@@ -30,7 +30,7 @@
       </div>
       <nav class="three right main-nav">
         <a href="{{ url_for('job_template.templates') }}">Templates</a>
-        <a href="">Archive</a>
+        <a href="{{ url_for('task.archive') }}">Archive</a>
         <a href="">Logout</a>
       </nav>
     </header>

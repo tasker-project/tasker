@@ -44,7 +44,7 @@ nav a:hover, .list-template i:hover, .delete:hover {
   cursor: pointer;
 }
 
-button, input[type="submit" i] {
+button, input[type="submit" i], .link-btn {
   background: #00aaad;
   border-left: 2px solid #05f6fa;
   border-top: 2px solid #05f6fa;
@@ -58,8 +58,14 @@ button, input[type="submit" i] {
   width: 100px;
 }
 
-button:hover {
+button:hover, .link-btn:hover {
   color: #7a1611;
+}
+
+.link-btn  {
+  display: inline-block;
+  font-size: 1em;
+  text-align: center;
 }
 
 .logo {
@@ -76,7 +82,7 @@ button:hover {
   align-items: center;
 }
 
-.mobile-nav button {
+.mobile-nav button, .mobile-nav .link-btn {
   margin: 1em;
   width: 80%;
 }

@@ -27,3 +27,13 @@ def task_detail(id):
     task = tasks[int(id)]
 
     return render_template("task/task-detail.html", title="Task Detail", user=user, task=task)
+
+@bp.route('/add_task')
+#@login_required
+def add_task():
+    return render_template('task/add-task.html', title="Create Task")
+
+@bp.route('/archive')
+#@login_required
+def archive():
+    return render_template('task/archive.html', title="Archive")

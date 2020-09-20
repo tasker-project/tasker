@@ -17,6 +17,11 @@ def templates():
     ]
     return render_template('job-template/templates.html', title='Templates', user=user, templates=templates)
 
+@bp.route('/add_template')
+#@login_required
+def add_template():
+    return render_template('job-template/add-template.html', title="Create Template")
+
 @bp.route('/template_detail/<id>')
 def template_detail(id):
     user = {
