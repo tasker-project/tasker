@@ -1,12 +1,12 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, redirect, request, url_for
 from tasker.database import db
-#from tasker.home.forms import LoginForm, RegistrationForm
+from tasker.user.forms import ChangeViewForm
 
 bp = Blueprint('user', __name__, static_folder='../static')
 
-@bp.route('/')
+@bp.route('/', methods=['GET', 'POST'])
 
-@bp.route('/home')
+@bp.route('/home', methods=['GET', 'POST'])
 #@login_required
 def home():
     user = {
@@ -26,4 +26,10 @@ def home():
     {'id' : 5, 'due_date' : '10.5.2020', 'template': templates[2]},
     {'id' : 6, 'due_date' : '10.10.2020', 'template': templates[1]},
     ]
-    return render_template('user/home.html', title="Home", tasks=tasks, user=user)
+    form = ChangeViewForm()
+    if form.validate_on_submit():
+        view = form.select_view.data
+        change_view = {'view': view}
+        user.update(change_view)
+        return render_template('user/home.html', title="Home", tasks=tasks, user=user, form=form)
+    return render_template('user/home.html', title="Home", tasks=tasks, user=user, form=form)
