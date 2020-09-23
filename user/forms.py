@@ -1,3 +1,5 @@
+# 2020-09-23 09:56:33 -0700 - Maged Bebawy - started working on forms and models files - lines:,4,5,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24
+# 2020-09-19 18:16:30 -0700 - Emily Martens - add JS functionality, add change view front end controls and styles - lines:,3,6,7,8
 from flask_wtf import FlaskForm
 from wtforms import StringField,IntegerField, SubmitField, PasswordField, SelectField, RadioField
 from wtforms.validators import DataRequired, EqualTo, email

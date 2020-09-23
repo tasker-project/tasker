@@ -1,3 +1,6 @@
+# 2020-09-19 18:16:30 -0700 - Emily Martens - add JS functionality, add change view front end controls and styles - lines:,4,6,10,12,32,33,34,35,36,37,38
+# 2020-09-19 13:07:50 -0700 - Emily Martens - add front end setup, blueprint setup for user, job_template - lines:,5,7,8,9,11,13,14,15,16,17
+# 2020-09-19 16:30:14 -0700 - Emily Martens - add task blueprint with routes to task detail - lines:,18,19,20,21,22,23,24,25,26,27,28,29,30,31
 from flask import Blueprint, render_template, redirect, request, url_for
 from tasker.database import db
 from tasker.user.forms import ChangeViewForm

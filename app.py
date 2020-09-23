@@ -1,3 +1,6 @@
+# 2020-09-19 13:07:50 -0700 - Emily Martens - add front end setup, blueprint setup for user, job_template - lines:,21,22,23,24,25,26,27,28
+# 2020-09-19 16:30:14 -0700 - Emily Martens - add task blueprint with routes to task detail - lines:,30,31,32
+# 2020-09-10 17:51:11 -0400 - Jeremy Axmacher - Initial commit - lines:,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,29,33,34,35,36,37,38,39,40,41
 from pathlib import Path
 import os
 
