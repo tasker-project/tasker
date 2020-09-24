@@ -5,6 +5,7 @@
  * `source venv/bin/activate` or, for windows `venv\\bin\\activate.bat`
  * `pip install -r requirements.txt`
  * `flask create-db`
+ * `export FLASK_APP=tasker`
  * `flask run`
  * Open http://localhost:5000 in a browser
 
