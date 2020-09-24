@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template
-from tasker.database import db
+from tasker.models import db
 from tasker.home.forms import MyForm
 from tasker.home.models import User
 

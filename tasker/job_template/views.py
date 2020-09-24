@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, redirect, url_for, flash
-from tasker.database import db
+from tasker.models import db
 #from tasker.job_template.forms import JobTemplateForm
 
 bp = Blueprint('job_template', __name__, static_folder='../static')
