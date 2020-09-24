@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, redirect, request, url_for
-from tasker.database import db
+from tasker.models import db
 from tasker.user.forms import ChangeViewForm
 
 bp = Blueprint('user', __name__, static_folder='../static')

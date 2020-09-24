@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, flash, redirect, url_for
-from tasker.database import db
+from tasker.models import db
 #from tasker.task.forms import EditTaskForm, SnoozeTaskForm
 
 bp = Blueprint('task', __name__, static_folder='../static')
