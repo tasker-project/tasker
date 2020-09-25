@@ -3,6 +3,7 @@ import os
 
 from flask import Flask
 from flask_bcrypt import Bcrypt
+from flask_login import LoginManager
 
 bcrypt = Bcrypt()
 
@@ -19,6 +20,9 @@ def create_app(config_object='tasker.settings'):
     db.init_app(app)
 
     bcrypt.init_app(app)
+
+    login = LoginManager()
+    login.login_view = 'user.login'
 
     #from tasker import home
     #app.register_blueprint(home.views.blueprint)

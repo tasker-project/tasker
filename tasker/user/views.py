@@ -1,6 +1,8 @@
-from flask import Blueprint, render_template, redirect, request, url_for
-from tasker.models import db
-from tasker.user.forms import ChangeViewForm
+from flask import Blueprint, render_template, redirect, request, url_for, flash
+from werkzeug.urls import url_parse
+from tasker.app import bcrypt
+from tasker.models import db, User
+from tasker.user.forms import ChangeViewForm, SignInForm
 
 bp = Blueprint('user', __name__, static_folder='../static')
 
@@ -33,3 +35,26 @@ def home():
         user.update(change_view)
         return render_template('user/home.html', title="Home", tasks=tasks, user=user, form=form)
     return render_template('user/home.html', title="Home", tasks=tasks, user=user, form=form)
+
+@bp.route('/login', methods=['GET', 'POST'])
+def login():
+    form = SignInForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email_address=form.email.data).first()
+        if user is None:
+            flash('Wrong username or password. Please try again.')
+            return redirect(url_for('user.login'))
+        if bcrypt.check_password_hash(user.password, form.password.data) == False:
+            flash('Wrong username or password. Please try again.')
+            return redirect(url_for('user.login'))
+        login_user(user)
+        next_page = request.args.get('next')
+        if not next_page or url_parse(next_page).netloc != '':
+            next_page = url_for('user.home')
+        return redirect(url_for('user.home'))
+    return render_template('user/login.html', title="Login", form=form)
+
+@bp.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('user.login'))
