@@ -54,9 +54,9 @@ class Task(db.Model):
     job_template_id = db.Column(db.Integer, db.ForeignKey('job_template.id'))
 
     @classmethod
-    def create_task(cls, id, name, description, status, due_date_obj):
+    def create_task(cls,name, description, status, due_date_obj):
         task = cls(
-            id=id, name=name, description=description, status=status,
+            name=name, description=description, status=status,
             due_date=int(due_date_obj.timestamp())
         )
         db.session.add(task)
@@ -77,10 +77,10 @@ class JobTemplate(db.Model):
     tasks = db.relationship('Task', backref='job_template', uselist=True)
 
     @classmethod
-    def create_job_template(cls, id, name, description, repetition, interval, hour,
+    def create_job_template(cls, name, description, repetition, interval, hour,
             starting_date_obj):
         job_template = cls(
-            id=id, name=name, description=description, repetition=repetition,
+            name=name, description=description, repetition=repetition,
             interval=interval, hour=hour,
             starting_date=int(starting_date_obj.timestamp())
         )

@@ -1,10 +1,12 @@
 from pathlib import Path
 import os
 
-from flask import Flask
+from flask import Flask, flash
 from flask_bcrypt import Bcrypt
+from flask_moment import Moment
 
 bcrypt = Bcrypt()
+moment = Moment()
 
 
 def create_app(config_object='tasker.settings'):
@@ -19,6 +21,7 @@ def create_app(config_object='tasker.settings'):
     db.init_app(app)
 
     bcrypt.init_app(app)
+    moment.init_app(app)
 
     #from tasker import home
     #app.register_blueprint(home.views.blueprint)
