@@ -158,6 +158,19 @@ i {
 /* Job Templates List */
 
 
+/* Form Styles */
+
+.form-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+input {
+  margin-top: .5em;
+  width: 100%;
+}
+
 /* break points for ipad, laptop/desktop, and large screens */
 @media all and (min-width: 750px){
   .logo {
