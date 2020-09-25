@@ -1,17 +1,9 @@
 import enum
-
-from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from flask_sqlalchemy import SQLAlchemy
-
 from tasker.app import bcrypt
-#from tasker.app import login
 
 db = SQLAlchemy()
-
-#@login.user_loader
-#def load_user(id):
-    #return User.query.get(int(id))
 
 class TaskStatus(enum.Enum):
     Pending = 1
@@ -28,7 +20,7 @@ class User(db.Model, UserMixin):
     timezone = db.Column(db.String(80), nullable=False)
     templates = db.relationship('JobTemplate', backref='owner', lazy='dynamic')
     tasks = db.relationship('Task', backref='owner', lazy='dynamic')
-    
+
     def get_id(self):
         return self.email_address
 
@@ -62,8 +54,8 @@ class Task(db.Model):
         db.session.add(task)
         db.session.commit()
         return task
-    
-        
+
+
 class JobTemplate(db.Model):
     __tablename__ = 'job_template'
     id = db.Column(db.Integer, primary_key=True)

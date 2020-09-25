@@ -16,9 +16,12 @@
   <body>
     <header class="three-row">
       <nav class="three left main-nav">
+        {% if not current_user.is_anonymous %}
         <a href="{{ url_for('job_template.add_template') }}"><div class="link-btn">+Template</div></a>
         <a href="{{ url_for('task.add_task') }}"><div class="link-btn">+Task</div></a>
+        {% endif %}
       </nav>
+      {% if not current_user.is_anonymous %}
       <div id="mobileNavTrigger" class="mobile-nav">
         <i class="fas fa-ellipsis-v"></i>
       </div>
@@ -28,17 +31,20 @@
           <a href="{{ url_for('user.home') }}">Home</a><br>
           <a href="{{ url_for('job_template.templates') }}">Templates</a><br>
           <a href="{{ url_for('task.archive') }}">Archive</a><br>
-          <a href="">Logout</a>
+          <a href="{{ url_for('user.logout') }}">Logout</a>
       </article>
+      {% endif %}
       <div align="center" class="three">
         <a href="{{ url_for('user.home') }}"><img class="logo" src="../static/img/icon.png" alt="Tasker Icon"/></a>
         <a href="{{ url_for('user.home')}}"><h1>Tasker<span class="red-txt">App</span></h1></a>
       </div>
       <nav class="three right main-nav">
+        {% if not current_user.is_anonymous %}
         <a href="{{ url_for('user.home') }}">Home</a>
         <a href="{{ url_for('job_template.templates') }}">Templates</a>
         <a href="{{ url_for('task.archive') }}">Archive</a>
-        <a href="">Logout</a>
+        <a href="{{ url_for('user.logout') }}">Logout</a>
+        {% endif %}
       </nav>
     </header>
   {% with messages = get_flashed_messages() %}
