@@ -11,7 +11,7 @@ class SignUp(FlaskForm):
     email = StringField('Email', [DataRequired(), email()])
     password = PasswordField('Password', [DataRequired(), EqualTo('confirm_password', message='Passwords must match')])
     confirm_password = PasswordField('Confirm password', [DataRequired()])
-    timezone = SelectField('Time zone', choices=[(date, 'Atlantic Standard Time (AST)'), ('EST', 'Eastern Standard Time (EST)'), ('CST', 'Central Standard Time (CST)'), ('MST', 'Mountain Standard Time (MST)'), ('PST', ' Pacific Standard Time (PST)'), ('AKST', 'Alaskan Standard Time (AKST)'), ('HST', 'Hawaii-Aleutian Standard Time (HST)'), ('UTC-11', 'Samoa standard time (UTC-11)'), ('UTC+10', 'Chamorro Standard Time (UTC+10)')])
+    timezone = SelectField('Time zone', choices=[('AST', 'Atlantic Standard Time (AST)'), ('EST', 'Eastern Standard Time (EST)'), ('CST', 'Central Standard Time (CST)'), ('MST', 'Mountain Standard Time (MST)'), ('PST', ' Pacific Standard Time (PST)'), ('AKST', 'Alaskan Standard Time (AKST)'), ('HST', 'Hawaii-Aleutian Standard Time (HST)'), ('UTC-11', 'Samoa standard time (UTC-11)'), ('UTC+10', 'Chamorro Standard Time (UTC+10)')])
     submit = SubmitField('submit')
 
 
