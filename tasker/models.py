@@ -2,13 +2,8 @@ import enum
 from flask_login import UserMixin
 from flask_sqlalchemy import SQLAlchemy
 from tasker.app import bcrypt
-#from tasker.app import login
 
 db = SQLAlchemy()
-
-#@login.user_loader
-#def load_user(id):
-    #return User.query.get(int(id))
 
 class TaskStatus(enum.Enum):
     Pending = 1

@@ -3,7 +3,7 @@
 {% block content %}
 
 <section class="col-centered">
-  <form action="" method="POST" class="ctr-form" nonvalidate>
+  <form class="ctr-form" action="" method="POST" nonvalidate>
     {{ form.csrf_token }}
     <p>{{ form.email.label}} {{ form.email }}</p>
     {% for error in form.email.errors %}

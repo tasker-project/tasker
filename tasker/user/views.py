@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, redirect, request, url_for, flash
 from werkzeug.urls import url_parse
+from flask_login import current_user, login_user, login_required, logout_user
 from tasker.app import bcrypt
 from tasker.models import db, User
 from tasker.user.forms import ChangeViewForm, SignInForm
@@ -9,7 +10,7 @@ bp = Blueprint('user', __name__, static_folder='../static')
 @bp.route('/', methods=['GET', 'POST'])
 
 @bp.route('/home', methods=['GET', 'POST'])
-#@login_required
+@login_required
 def home():
     user = {
     'username': 'test@testing.com', 'email' : 'test@testing.com', 'timezone' : 'EST', 'view' : 'Month'
@@ -38,6 +39,8 @@ def home():
 
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('user.home'))
     form = SignInForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email_address=form.email.data).first()
