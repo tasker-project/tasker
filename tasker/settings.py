@@ -16,7 +16,8 @@ env.read_env()
 
 ENV = env.str("FLASK_ENV", default="production")
 DEBUG = ENV == "development"
-SQLALCHEMY_DATABASE_URI = env.str("DATABASE_URL", default='sqlite:///local.db')
+#SQLALCHEMY_DATABASE_URI = env.str("DATABASE_URL", default='sqlite:///local.db')
+SQLALCHEMY_DATABASE_URI = env.str("DATABASE_URL", default='postgresql://postgres:mb121691@localhost/tasker')
 SECRET_KEY = env.str("SECRET_KEY", default=base64.b64encode(os.urandom(24)).decode('utf-8'))
 SEND_FILE_MAX_AGE_DEFAULT = env.int("SEND_FILE_MAX_AGE_DEFAULT", default=5)
 BCRYPT_LOG_ROUNDS = env.int("BCRYPT_LOG_ROUNDS", default=13)
