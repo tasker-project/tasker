@@ -1,11 +1,13 @@
 from pathlib import Path
 import os
 
-from flask import Flask
+from flask import Flask, flash
 from flask_bcrypt import Bcrypt
+from flask_moment import Moment
 from flask_login import LoginManager
 
 bcrypt = Bcrypt()
+moment = Moment()
 
 def create_app(config_object='tasker.settings'):
     app = Flask(__name__)
@@ -19,6 +21,7 @@ def create_app(config_object='tasker.settings'):
     db.init_app(app)
 
     bcrypt.init_app(app)
+    moment.init_app(app)
 
     login_manager = LoginManager()
     login_manager.init_app(app)

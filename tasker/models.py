@@ -46,6 +46,7 @@ class Task(db.Model):
     job_template_id = db.Column(db.Integer, db.ForeignKey('job_template.id'))
 
     @classmethod
+
     def create_task(cls, name, description, status, due_date_obj):
         task = cls(
             name=name, description=description, status=status,

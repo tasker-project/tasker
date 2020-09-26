@@ -113,6 +113,12 @@ i {
   list-style: none;
 }
 
+.success-msg {
+  /* color: green; */
+  color: #98db6e;
+  list-style: none;
+}
+
 /* HOME */
 
 .hidden {

@@ -1,23 +1,47 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField,IntegerField, SubmitField, PasswordField, SelectField, RadioField
-from wtforms.validators import DataRequired, EqualTo, Email
+from wtforms.validators import DataRequired, EqualTo, email
+
 
 class ChangeViewForm(FlaskForm):
     select_view = RadioField('select_view', default='Day', choices=[('Day', 'Day'), ('Week', 'Week'), ('Month','Month')], validators=[DataRequired()])
 
 
 class SignUp(FlaskForm):
-    user_name = StringField('Username', validators=[DataRequired()])
-    first_name = StringField('First name', validators=[DataRequired()])
-    last_name = StringField('Last name', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired(), EqualTo('confirm', message='Passwords must match')])
-    confirm_password = PasswordField('Confirm password', validators=[DataRequired()])
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    time_zone = SelectField('Time zone', choices=[('AST', 'Atlantic Standard Time (AST)'), ('EST', 'Eastern Standard Time (EST)'), ('CST', 'Central Standard Time (CST)'), ('MST', 'Mountain Standard Time (MST)'), ('PST', ' Pacific Standard Time (PST)'), ('AKST', 'Alaskan Standard Time (AKST)'), ('HST', 'Hawaii-Aleutian Standard Time (HST)'), ('UTC-11', 'Samoa standard time (UTC-11)'), ('UTC+10', 'Chamorro Standard Time (UTC+10)')])
+    email = StringField('Email', [DataRequired(), email()])
+    password = PasswordField('Password', [DataRequired(), EqualTo('confirm_password', message='Passwords must match')])
+    confirm_password = PasswordField('Confirm password', [DataRequired()])
+    timezone = SelectField('Time zone', choices=[('America/Adak', 'America/Adak'), ('America/Anchorage', 'America/Anchorage'), 
+    ('America/Boise', 'America/Boise'), 
+    ('America/Chicago', 'America/Chicago'), 
+    ('America/Denver', ' America/Denver'),
+    ('America/Detroit', 'America/Detroit'), 
+    ('America/Indiana/Indianapolis', 'America/Indiana/Indianapolis'),
+    ('America/Indiana/Knox', 'America/Indiana/Knox'), 
+    ('America/Indiana/Marengo', 'America/Indiana/Marengo'),
+    ('America/Indiana/Petersburg', 'America/Indiana/Petersburg'), 
+    ('America/Indiana/Tell_City', 'America/Indiana/Tell_City'), 
+    ('America/Indiana/Vevay', 'America/Indiana/Vevay'),
+    ('America/Indiana/Vincennes', 'America/Indiana/Vincennes'), 
+    ('America/Indiana/Indianapolis', 'America/Indiana/Indianapolis'),
+    ('America/Indiana/Winamac', 'America/Indiana/Winamac'), 
+    ('America/Juneau', 'America/Juneau'),
+    ('America/Kentucky/Louisville', 'America/Kentucky/Louisville'), 
+    ('America/Kentucky/Monticello', 'America/Kentucky/Monticello'), 
+    ('America/Los_Angeles', ' America/Los_Angeles'),
+    ('America/Menominee', 'America/Menominee'), 
+    ('America/Metlakatla', 'America/Metlakatla'),
+    ('America/New_York', 'America/New_York'), 
+    ('America/North_Dakota/Beulah', 'America/North_Dakota/Beulah'),
+    ('America/North_Dakota/Center', 'America/North_Dakota/Center'), 
+    ('America/North_Dakota/New_Salem', 'America/North_Dakota/New_Salem'), 
+    ('America/Phoenix', 'America/Phoenix'),
+    ('America/Sitka', 'America/Sitka'), 
+    ('America/Yakutat', 'America/Yakutat'),
+    ])
     submit = SubmitField('submit')
 
 
-class SignInForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    submit = SubmitField('Login')
+class SignIn(FlaskForm):
+    user_name = StringField('Username', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired(), EqualTo('confirm', message='Passwords must match')])

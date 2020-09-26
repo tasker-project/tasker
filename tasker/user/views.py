@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, redirect, request, url_for, flash
+
 from werkzeug.urls import url_parse
 from flask_login import current_user, login_user, login_required, logout_user
 from tasker.app import bcrypt
@@ -6,6 +7,22 @@ from tasker.models import db, User
 from tasker.user.forms import ChangeViewForm, SignInForm
 
 bp = Blueprint('user', __name__, static_folder='../static')
+
+
+
+@bp.route('/register', methods=['GET', 'POST'])
+def register():
+    form = SignUp()
+
+    if form.validate_on_submit():
+        if db.session.query(db.exists().where(User.email_address == form.email.data)).scalar():
+            form.email.errors.append('Email already exists')
+        else:
+            user = User()
+            user.create_user(form.email.data, form.password.data, form.timezone.data)
+            flash('Successfully registered', 'success')
+            return redirect(url_for('user.home'))
+    return render_template('user/register.html', form=form)
 
 @bp.route('/', methods=['GET', 'POST'])
 
@@ -36,6 +53,7 @@ def home():
         user.update(change_view)
         return render_template('user/home.html', title="Home", tasks=tasks, user=user, form=form)
     return render_template('user/home.html', title="Home", tasks=tasks, user=user, form=form)
+
 
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
