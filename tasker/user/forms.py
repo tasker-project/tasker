@@ -25,7 +25,7 @@ class SignUp(FlaskForm):
     ('America/Indiana/Vincennes', 'America/Indiana/Vincennes'), 
     ('America/Indiana/Indianapolis', 'America/Indiana/Indianapolis'),
     ('America/Indiana/Winamac', 'America/Indiana/Winamac'), 
-    ('America/Juneau', 'America/Juneau')
+    ('America/Juneau', 'America/Juneau'),
     ('America/Kentucky/Louisville', 'America/Kentucky/Louisville'), 
     ('America/Kentucky/Monticello', 'America/Kentucky/Monticello'), 
     ('America/Los_Angeles', ' America/Los_Angeles'),
