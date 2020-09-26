@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField,IntegerField, SubmitField, PasswordField, SelectField, RadioField
-from wtforms.validators import DataRequired, EqualTo, email
+from wtforms.validators import DataRequired, EqualTo, Email
 
 
 class ChangeViewForm(FlaskForm):
@@ -15,6 +15,7 @@ class SignUp(FlaskForm):
     submit = SubmitField('submit')
 
 
-class SignIn(FlaskForm):
-    user_name = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired(), EqualTo('confirm', message='Passwords must match')])
+class SignInForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField('Login')

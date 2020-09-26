@@ -4,10 +4,10 @@ import os
 from flask import Flask, flash
 from flask_bcrypt import Bcrypt
 from flask_moment import Moment
+from flask_login import LoginManager
 
 bcrypt = Bcrypt()
 moment = Moment()
-
 
 def create_app(config_object='tasker.settings'):
     app = Flask(__name__)
@@ -22,6 +22,15 @@ def create_app(config_object='tasker.settings'):
 
     bcrypt.init_app(app)
     moment.init_app(app)
+
+    login_manager = LoginManager()
+    login_manager.init_app(app)
+    login_manager.login_view = 'user.login'
+
+    from tasker.models import User
+    @login_manager.user_loader
+    def load_user(email):
+        return User.query.get(email)
 
     #from tasker import home
     #app.register_blueprint(home.views.blueprint)

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="form-wrapper">
+  <form class="task" action="" method="POST" nonvalidate>
+    {{ form.csrf_token }}
+    <p>{{ form.email.label}}: {{ form.email }}</p>
+    {% for error in form.email.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+    {% endfor %}
+    <p>{{ form.password.label }}: {{ form.password }}</p>
+    {% for error in form.password.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+    {% endfor %}
+    <p class="right">{{ form.submit() }}
+
+  </form>
+</section>
+
+{% endblock %}
