@@ -31,8 +31,6 @@ def delete_tasks(template_id):
     return 1
 
 def update_job_template(template_id):
-    template = JobTemplate.query.get(template_id)
-    user_id = template.owner.email_address
     delete_tasks(template_id)
     generate_tasks(template_id)
     return 1
