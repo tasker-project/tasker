@@ -18,8 +18,8 @@ def generate_tasks(template_id):
         task.owner = user
         task.job_template = template
         db.session.add(task)
-        db.session.commit()
         timestamp += datetime.timedelta(days=rep)
+    db.session.commit()
     return 1
 
 def delete_tasks(template_id):
