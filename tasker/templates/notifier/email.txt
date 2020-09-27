@@ -1,0 +1,4 @@
+Task Due: {{ task.name }}
+Due Date: {{ due_date }}
+
+{{ task.description }}
