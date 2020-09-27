@@ -12,9 +12,9 @@ def generate_tasks(template_id):
     if interval == 3:
         rep *= 30
     start = template.starting_date
-    timestamp = datetime.datetime.fromtimestamp(start)
+    timestamp = datetime.datetime.fromtimestamp(start, tz=pytz.timezone(user.timezone))
     timestamp = timestamp.replace(hour=template.hour, minute=0)
-    timestamp = timestamp.astimezone(pytz.timezone(user.timezone))
+    #timestamp = timestamp.astimezone(pytz.timezone(user.timezone))
     end = timestamp.replace(timestamp.year + 1)
     while timestamp <= end:
         task = Task.create_task(template.name, template.description,TaskStatus.Pending, timestamp)
