@@ -1,5 +1,6 @@
 from tasker.models import db, User, JobTemplate, Task, TaskStatus
-import datetime
+from pytz import timezone
+import datetime, pytz
 
 def generate_tasks(template_id):
     template = JobTemplate.query.get(template_id)
@@ -12,6 +13,8 @@ def generate_tasks(template_id):
         rep *= 30
     start = template.starting_date
     timestamp = datetime.datetime.fromtimestamp(start)
+    timestamp = timestamp.replace(hour=template.hour, minute=0)
+    timestamp = timestamp.astimezone(pytz.timezone(user.timezone))
     end = timestamp.replace(timestamp.year + 1)
     while timestamp <= end:
         task = Task.create_task(template.name, template.description,TaskStatus.Pending, timestamp)
