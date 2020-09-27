@@ -4,7 +4,7 @@ from werkzeug.urls import url_parse
 from flask_login import current_user, login_user, login_required, logout_user
 from tasker.app import bcrypt
 from tasker.models import db, User
-from tasker.user.forms import ChangeViewForm, SignInForm
+from tasker.user.forms import ChangeViewForm, SignInForm, SignUpForm
 
 bp = Blueprint('user', __name__, static_folder='../static')
 
@@ -12,14 +12,14 @@ bp = Blueprint('user', __name__, static_folder='../static')
 
 @bp.route('/register', methods=['GET', 'POST'])
 def register():
-    form = SignUp()
+    form = SignUpForm()
 
     if form.validate_on_submit():
-        if db.session.query(db.exists().where(User.email_address == form.email.data)).scalar():
-            form.email.errors.append('Email already exists')
+        if db.session.query(db.exists().where(User.email_address == form.email_address.data)).scalar():
+            form.email_address.errors.append('Email already exists')
         else:
             user = User()
-            user.create_user(form.email.data, form.password.data, form.timezone.data)
+            user.create_user(form.email_address.data, form.password.data, form.timezone.data)
             flash('Successfully registered', 'success')
             return redirect(url_for('user.home'))
     return render_template('user/register.html', form=form)
@@ -61,7 +61,7 @@ def login():
         return redirect(url_for('user.home'))
     form = SignInForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(email_address=form.email.data).first()
+        user = User.query.filter_by(email_address=form.email_address.data).first()
         if user is None:
             flash('Wrong username or password. Please try again.')
             return redirect(url_for('user.login'))
