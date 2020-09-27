@@ -35,8 +35,8 @@ def create_app(config_object='tasker.settings'):
     #from tasker import home
     #app.register_blueprint(home.views.blueprint)
 
-    from tasker import user
-    app.register_blueprint(user.views.bp)
+    #from tasker import user
+    #app.register_blueprint(user.views.bp)
 
     from tasker import job_template
     app.register_blueprint(job_template.views.bp)
