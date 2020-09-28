@@ -1,3 +1,7 @@
+# 2020-09-19 16:30:14 -0700 - Emily Martens - add task blueprint with routes to task detail - lines:,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33
+# 2020-09-19 19:02:54 -0700 - Emily Martens - add views and navigation for add template, add task, and archive. - lines:,34,35,36,37,38,39,46,47,48,49
+# 2020-09-23 23:09:41 -0400 - Jeremy Axmacher - Team collaborated on model schema definition - lines:,6
+# 2020-09-19 19:46:10 -0700 - Emily Martens - add snooze and delete views, update styles - lines:,5,40,41,42,43,44,45,50,51,52,53,54,55,56
 from flask import Blueprint, render_template, flash, redirect, url_for
 from tasker.models import db
 #from tasker.task.forms import EditTaskForm, SnoozeTaskForm

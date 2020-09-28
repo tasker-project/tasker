@@ -1,3 +1,8 @@
+# 2020-09-24 22:26:17 -0700 - Emily Martens - debug login_manager, add full login functionality, add logout route to menu - lines:,31,32,33,34,35,36,37,38
+# 2020-09-27 13:28:53 -0700 - Emily Martens - fix naming discrepancies in user forms/views/templates, add form styling classes to register template, restructure login and register templates to match, re-enable User blueprint. - lines:,43,44
+# 2020-09-25 07:30:26 -0700 - Maged Bebawy - added user registeration - lines:,9,11,15,29
+# 2020-09-24 21:54:21 -0700 - Emily Martens - add login setup, form, view, template, add logout route - lines:,12,39,58
+# 2020-09-23 23:09:41 -0400 - Jeremy Axmacher - Team collaborated on model schema definition - lines:,6,7,8,10,13,14,16,17,18,19,20,21,22,23,24,25,26,27,28,30,40,41,42,45,46,47,48,49,50,51,52,53,54,55,56,57
 from pathlib import Path
 import os
 
