@@ -4,7 +4,11 @@
   <h2>Job Templates</h2>
   {% for job in jobs %}
   <div class="list-template">
+<<<<<<< HEAD
     <a href="{{ url_for('job_template.template_detail', id=job.id) }}"><strong>{{ job.name }}</strong></a> - {{job.description}}<a href="{{ url_for('job_template.edit_template', id=job.id) }}"> <i style="font-size: 1em;" class="far fa-edit"></i></a>
+=======
+    <a href="{{ url_for('job_template.template_detail', id=template.id) }}"><strong>{{ template.name }}</strong></a><a href="{{ url_for('job_template.edit_template', id=template.id) }}"> <i style="font-size: 1em;" class="far fa-edit"></i></a>
+>>>>>>> ac11dd5... Part of the way there
   </div>
   {% endfor %}
 </section>
