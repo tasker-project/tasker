@@ -52,7 +52,7 @@ def send_email(task):
             },
             'Subject': {
                 'Charset': 'UTF-8',
-                'Data': f'Task Due - {task.name}'
+                'Data': f'Task Due: {task.name}'
             }
         },
         Source='Tasker <app@tasker.nvram.io>'
