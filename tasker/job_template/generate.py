@@ -1,26 +1,32 @@
 from tasker.models import db, User, JobTemplate, Task, TaskStatus
 from pytz import timezone
 import datetime, pytz
+from pytz import timezone
 
 def generate_tasks(template_id):
     template = JobTemplate.query.get(template_id)
     user = template.owner
     rep = template.repetition
     interval = template.interval
+    user_tz = timezone(user.timezone)
     if interval == 2:
         rep *= 7
     if interval == 3:
         rep *= 30
-    start = template.starting_date
-    timestamp = datetime.datetime.fromtimestamp(start, tz=pytz.timezone(user.timezone))
-    timestamp = timestamp.replace(hour=template.hour, minute=0)
-    end = timestamp.replace(timestamp.year + 1)
-    while timestamp <= end:
+    timestamp = datetime.datetime.fromtimestamp(
+        template.starting_date,
+        tz=pytz.timezone(user.timezone)
+    )
+    start = timestamp.date()
+    end = start.replace(start.year + 1)
+    while start <= end:
+        timestamp = datetime.datetime.combine(start, datetime.time(template.hour, 0))
+        timestamp = user_tz.localize(timestamp)
         task = Task.create_task(template.name, template.description,TaskStatus.Pending, timestamp)
         task.owner = user
         task.job_template = template
         db.session.add(task)
-        timestamp += datetime.timedelta(days=rep)
+        start += datetime.timedelta(days=rep)
     db.session.commit()
     return 1
 
