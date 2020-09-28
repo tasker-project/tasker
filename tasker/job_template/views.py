@@ -8,22 +8,9 @@ bp = Blueprint('job_template', __name__, static_folder='../static')
 @bp.route('/templates')
 #@login_required
 def templates():
-    user = {
-    'username': 'test@testing.com', 'email' : 'test@testing.com', 'timezone' : 'EST', 'view' : 'Month'
-    }
-    #templates = [
-    #{'id': 0, 'title':'Template 1', 'start_date' : '09.10.2020', 'interval': 3, 'interval_type' : 'Weeks', 'description' : 'Job Template description goes here.'},
-    #{'id': 1, 'title': 'Template 2', 'start_date' : '09.15.2020', 'interval': 5, 'interval_type' : 'Days', 'description' : 'Job Template description goes here.'},
-    #{'id' : 2, 'title':'Template 3', 'start_date' : '09.20.2020', 'interval' : 1, 'interval_type' : 'Months', 'description' : 'Job Template description goes here.'}
-    #]
-
     jobs = JobTemplate.getJobTemplates()
-    for job in jobs:
-        print("## name = " + job.name)
-    #job = JobTemplate()
-    #jobs = job.getJobTemplates()
-
-    return render_template('job-template/templates.html', title='Templates', user=user, jobs=jobs)
+    
+    return render_template('job-template/templates.html', title='Templates', jobs=jobs)
 
 @bp.route('/add_template')
 #@login_required
@@ -33,17 +20,9 @@ def add_template():
 @bp.route('/template_detail/<id>')
 #@login_required
 def template_detail(id):
-    user = {
-    'username': 'test@testing.com', 'email' : 'test@testing.com', 'timezone' : 'EST', 'view' : 'Month'
-    }
-    templates = [
-    {'id': 0, 'title':'Template 1', 'start_date' : '09.10.2020', 'interval': 3, 'interval_type' : 'Weeks', 'description' : 'Job Template description goes here.'},
-    {'id': 1, 'title': 'Template 2', 'start_date' : '09.15.2020', 'interval': 5, 'interval_type' : 'Days', 'description' : 'Job Template description goes here.'},
-    {'id' : 2, 'title':'Template 3', 'start_date' : '09.20.2020', 'interval' : 1, 'interval_type' : 'Months', 'description' : 'Job Template description goes here.'}
-    ]
-    template = templates[int(id)]
+    job = JobTemplate.getJobTemplate(id)
 
-    return render_template('job-template/template-detail.html', title='Template Details', user=user, template=template)
+    return render_template('job-template/template-detail.html', title='Template Details', job=job)
 
 @bp.route('/edit_template/<id>')
 #@login_required

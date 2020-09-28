@@ -85,3 +85,9 @@ class JobTemplate(db.Model):
     def getJobTemplates(cls):
         query = db.session.query(JobTemplate)
         return query
+
+    @classmethod
+    def getJobTemplate(cls, id):
+        query = db.session.query(JobTemplate).filter(JobTemplate.id==id)
+        for user in query:
+            return user
