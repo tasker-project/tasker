@@ -1,28 +1,28 @@
 {% from "form_errors.html" import field_error %}
 {% extends "base.html" %}
 {% block content %}
-<div>
+<div class="form-wrapper">
     <h1>Sign Up</h1>
-    <form action="" method="POST">
+    <form class="task" action="" method="POST">
         {{ form.hidden_tag() }}
-    <div>
-        {{ form.email.label }}  {{ form.email}} {{ form.email.error }}
-        {{ field_error(form.email) }}
-    </div>
-    <div>
-        {{ form.password.label }}  {{ form.password}} 
+    <p>
+        {{ form.email_address.label }}:  {{ form.email_address}} {{ form.email_address.error }}
+        {{ field_error(form.email_address) }}
+    </p>
+    <p>
+        {{ form.password.label }}:  {{ form.password}}
         {{ field_error(form.password) }}
-    </div>
-    <div>
-        {{ form.confirm_password.label }}  {{ form.confirm_password}}
-    </div>
-    <div>
-        {{ form.timezone.label }}  {{ form.timezone}}
-    </div>
-    <div>
+    </p>
+    <p>
+        {{ form.confirm_password.label }}:  {{ form.confirm_password}}
+    </p>
+    <p>
+        {{ form.timezone.label }}:  {{ form.timezone}}
+    </p>
+    <p class="right">
         {{ form.submit }}
-    </div>
+    </p>
 </form>
 </div>
-    
+
 {% endblock %}
