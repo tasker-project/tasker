@@ -80,14 +80,3 @@ class JobTemplate(db.Model):
         db.session.add(job_template)
         db.session.commit()
         return job_template
-
-    @classmethod
-    def getJobTemplates(cls):
-        query = db.session.query(JobTemplate)
-        return query
-
-    @classmethod
-    def getJobTemplate(cls, id):
-        query = db.session.query(JobTemplate).filter(JobTemplate.id==id)
-        for user in query:
-            return user

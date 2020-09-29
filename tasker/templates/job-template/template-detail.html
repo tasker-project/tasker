@@ -4,7 +4,7 @@
 <section class="include">
 <h2>{{ job.name }}</h2>
 <p><strong class="red-txt">Due Every:</strong> {{ job.interval }} {{ job.interval_type}}</p>
-<p><strong class="red-txt">Start Date:</strong> {{ job.start_date }}</p>
+<p><strong class="red-txt">Start Date:</strong> {{ job.starting_date }}</p>
 <p><strong class="red-txt"><span class="red-txt">Description: </strong> {{ job.description }}</p>
 <a href="{{ url_for('job_template.edit_template', id=job.id) }}"> <i style="font-size: 2em;" class="far fa-edit"></i></a>
 <a href="{{ url_for('job_template.delete_template', id=job.id) }}" class="delete">Delete</a>
