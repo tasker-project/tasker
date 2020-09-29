@@ -13,13 +13,11 @@ from tasker.job_template.generate import generate_tasks
 bp = Blueprint('job_template', __name__, static_folder='../static')
 
 
-@bp.template_filter('friendly_date')
 def friendly_date(d):
     starting_date = datetime.fromtimestamp(d, tz=pytz.timezone(current_user.timezone))
-    return starting_date.strftime('%B %d, %Y %I:%M%p')
+    return starting_date.strftime('%B %d, %Y')
 
 
-@bp.template_filter('intervalify')
 def intervalify(i):
     if i == 1:
         return 'Day(s)'
@@ -29,7 +27,6 @@ def intervalify(i):
         return 'Month(s)'
 
 
-@bp.template_filter('hourify')
 def hourify(h):
     if h < 12:
         suffix = 'AM'

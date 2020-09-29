@@ -3,9 +3,7 @@
 {% block content %}
 <section class="include">
 <h2>{{ job.name }}</h2>
-<p><strong>At:</strong> [{{ job.hour | hourify }}]</p>
-<p><strong>Repeated every:</strong> [{{ job.repetition }}] [{{ job.interval | intervalify }}]</p>
-<p><strong>Starting on:</strong> {{ job.starting_date | friendly_date }}</p>
+<p>At <strong>{{ job.hour | hourify }}</strong> every <strong>{{ job.repetition }} {{ job.interval | intervalify }}</strong> beginning <strong>{{ job.starting_date | friendly_date }}</strong>.</p>
 <p><strong>Description:</strong> {{ job.description }}</p>
 <a href="{{ url_for('job_template.edit_template', id=job.id) }}"> <i style="font-size: 2em;" class="far fa-edit"></i></a>
 <a href="{{ url_for('job_template.delete_template', id=job.id) }}" class="delete">Delete</a>

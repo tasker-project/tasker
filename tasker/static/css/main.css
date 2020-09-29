@@ -242,3 +242,9 @@ input {
       padding-right: 10em;
   }
 }
+input.auto-width {
+  width: auto;
+}
+textarea {
+  width: 100%;
+}

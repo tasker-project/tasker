@@ -1,11 +1,11 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, SelectField
+from wtforms import StringField, SubmitField, PasswordField, SelectField, TextAreaField
 from wtforms.fields.html5 import IntegerField, DateField
 from wtforms.validators import DataRequired, EqualTo, email
 
 class JobTemplateForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
-    description = StringField('Description', validators=[DataRequired()])
+    description = TextAreaField('Description', validators=[DataRequired()])
     hour = SelectField('Hour', validators=[DataRequired()], choices=[
         ('0', '12 AM'),
         ('1', '1 AM'),

@@ -8,13 +8,8 @@
     <p>
         {{ form.name.label }}:  {{ form.name}} {{ field_error(form.name) }}
     </p>
-    <p>
-        <ul>
-          <li>At {{ form.hour }} {{ field_error(form.hour) }}</li>
-          <li>Repeated every {{ form.repetition }} {{ form.interval }} {{ field_error(form.repetition) }} {{ field_error(form.interval) }}</li>
-          <li>Starting on {{ form.starting_date }} {{ field_error(form.starting_date) }}</li>
-        </ul>
-    </p>
+    <p>At {{ form.hour }} every {{ form.repetition(size=3, class_='auto-width') }} {{ form.interval(class_='auto-width') }} beginning {{ form.starting_date(class_='auto-width') }}</p>
+    <p>{{ field_error(form.hour) }} {{ field_error(form.repetition) }} {{ field_error(form.interval) }} {{ field_error(form.starting_date) }}</p>
     <p>
         {{ form.description.label }}:  {{ form.description }} {{ field_error(form.description) }}
     </p>
