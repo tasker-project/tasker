@@ -71,11 +71,12 @@ class JobTemplate(db.Model):
 
     @classmethod
     def create_job_template(cls, name, description, repetition, interval, hour,
-            starting_date_obj):
+            starting_date_obj, user):
         job_template = cls(
             name=name, description=description, repetition=repetition,
             interval=interval, hour=hour,
-            starting_date=int(starting_date_obj.timestamp())
+            starting_date=int(starting_date_obj.timestamp()),
+            user_email_address=user.email_address
         )
         db.session.add(job_template)
         db.session.commit()
