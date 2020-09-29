@@ -20,7 +20,7 @@ jobs:
           instance-ids: ${{ secrets.INSTANCE_ID }}
 
           working-directory: /home/ssm-user
-          command: /bin/sh ./update.sh
+          command: /bin/sh ./wrapper.sh
 
       # Catch SSM outputs
       - name: Get output
