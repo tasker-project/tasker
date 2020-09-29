@@ -1,21 +1,15 @@
 from flask import Blueprint, render_template, redirect, url_for, flash
+from flask_login import current_user, login_required
 from tasker.models import db
-#from tasker.job_template.forms import JobTemplateForm
+from tasker.models import JobTemplate
 
 bp = Blueprint('job_template', __name__, static_folder='../static')
 
 @bp.route('/templates')
-#@login_required
+@login_required
 def templates():
-    user = {
-    'username': 'test@testing.com', 'email' : 'test@testing.com', 'timezone' : 'EST', 'view' : 'Month'
-    }
-    templates = [
-    {'id': 0, 'title':'Template 1', 'start_date' : '09.10.2020', 'interval': 3, 'interval_type' : 'Weeks', 'description' : 'Job Template description goes here.'},
-    {'id': 1, 'title': 'Template 2', 'start_date' : '09.15.2020', 'interval': 5, 'interval_type' : 'Days', 'description' : 'Job Template description goes here.'},
-    {'id' : 2, 'title':'Template 3', 'start_date' : '09.20.2020', 'interval' : 1, 'interval_type' : 'Months', 'description' : 'Job Template description goes here.'}
-    ]
-    return render_template('job-template/templates.html', title='Templates', user=user, templates=templates)
+    jobs = db.session.query(JobTemplate).filter(JobTemplate.user_email_address == current_user.email_address)
+    return render_template('job-template/templates.html', title='Templates', jobs=jobs)
 
 @bp.route('/add_template')
 #@login_required
@@ -23,18 +17,20 @@ def add_template():
     return render_template('job-template/add-template.html', title="Create Template")
 
 @bp.route('/template_detail/<id>')
-#@login_required
+@login_required
 def template_detail(id):
-    user = {
-    'username': 'test@testing.com', 'email' : 'test@testing.com', 'timezone' : 'EST', 'view' : 'Month'
-    }
-    templates = [
-    {'id': 0, 'title':'Template 1', 'start_date' : '09.10.2020', 'interval': 3, 'interval_type' : 'Weeks', 'description' : 'Job Template description goes here.'},
-    {'id': 1, 'title': 'Template 2', 'start_date' : '09.15.2020', 'interval': 5, 'interval_type' : 'Days', 'description' : 'Job Template description goes here.'},
-    {'id' : 2, 'title':'Template 3', 'start_date' : '09.20.2020', 'interval' : 1, 'interval_type' : 'Months', 'description' : 'Job Template description goes here.'}
-    ]
-    template = templates[int(id)]
-    return render_template('job-template/template-detail.html', title='Template Details', user=user, template=template)
+    job = JobTemplate
+    foundJob = False
+    query = db.session.query(JobTemplate).filter(JobTemplate.id == id and JobTemplate.user_email_address == current_user.email_address)
+    for record in query:
+        job = record
+        foundJob = True
+
+    #throw error when job template does not exist, or not owned by user
+    if not foundJob:
+        raise NotFound('Job template not found')
+
+    return render_template('job-template/template-detail.html', title='Template Details', job=job)
 
 @bp.route('/edit_template/<id>')
 #@login_required
