@@ -1,3 +1,11 @@
+# 2020-09-23 09:56:33 -0700 - Maged Bebawy - started working on forms and models files - lines:,25,34,42,43,44,47,69,70,73,74
+# 2020-09-19 13:07:50 -0700 - Emily Martens - add front end setup, blueprint setup for user, job_template - lines:,10,15,22,23,45,46,48,55
+# 2020-09-29 16:36:00 -0400 - Jeremy Axmacher - Add initial job template form and creation logic - lines:,82,86,87
+# 2020-09-25 21:56:01 -0400 - J Axmacher - Merge branch 'master' into Maged-user-register - lines:,57
+# 2020-09-25 07:30:26 -0700 - Maged Bebawy - added user registeration - lines:,60,81,84
+# 2020-09-24 21:54:21 -0700 - Emily Martens - add login setup, form, view, template, add logout route - lines:,31,66,67,91
+# 2020-09-23 23:09:41 -0400 - Jeremy Axmacher - Team collaborated on model schema definition - lines:,9,11,12,13,14,16,17,18,19,20,21,24,26,27,28,29,30,32,33,35,36,37,38,39,40,41,49,50,51,52,53,54,56,59,61,62,63,64,65,68,71,72,75,76,77,78,79,80,83,85,88,89,90
+# 2020-09-24 17:39:34 -0400 - Jeremy Axmacher - Remove hardcoded ID from task and job template creation - lines:,58
 import enum
 from flask_login import UserMixin
 from flask_sqlalchemy import SQLAlchemy

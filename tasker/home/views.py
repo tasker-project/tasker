@@ -1,3 +1,5 @@
+# 2020-09-10 17:51:11 -0400 - Jeremy Axmacher - Initial commit - lines:,3,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21
+# 2020-09-23 23:09:41 -0400 - Jeremy Axmacher - Team collaborated on model schema definition - lines:,4
 from flask import Blueprint, render_template
 from tasker.models import db
 from tasker.home.forms import MyForm

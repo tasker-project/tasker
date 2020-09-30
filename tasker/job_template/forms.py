@@ -1,3 +1,6 @@
+# 2020-09-23 09:56:33 -0700 - Maged Bebawy - started working on forms and models files - lines:,4,7,8,10,39,47,48,56,57,58,59
+# 2020-09-29 16:36:00 -0400 - Jeremy Axmacher - Add initial job template form and creation logic - lines:,6,9,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,40,41,42,43,44,45,46,49,50,51,52,53,54,55
+# 2020-09-29 16:36:00 -0400 - Jeremy Axmacher - Clean up job template form and job template detail field formatting - lines:,5,11
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, SelectField, TextAreaField
 from wtforms.fields.html5 import IntegerField, DateField
@@ -50,7 +53,3 @@ class JobTemplateForm(FlaskForm):
         return
         if len(field.data) > 50:
             raise ValidationError('Name must be less than 50 characters')
-
-
-
-
