@@ -1,0 +1,5 @@
+[Unit]
+Description=Run email.service every 1 hour
+
+[Timer]
+OnCalendar=*-*-* *:00:00

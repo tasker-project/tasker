@@ -1,0 +1,11 @@
+[Unit]
+Description=Tasker Email Notifier
+
+[Service]
+Type=oneshot
+User=ec2-user
+Group=nginx
+WorkingDirectory=/var/www
+Environment="PATH=/var/www/venv/bin"
+Environment="AWS_DEFAULT_REGION=us-east-1"
+ExecStart=/var/www/venv/bin/python -m tasker.notifier
