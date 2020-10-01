@@ -32,9 +32,6 @@ def create_app(config_object='tasker.settings'):
     def load_user(email):
         return User.query.get(email)
 
-    #from tasker import home
-    #app.register_blueprint(home.views.blueprint)
-
     from tasker import user
     app.register_blueprint(user.views.bp)
 
@@ -46,6 +43,9 @@ def create_app(config_object='tasker.settings'):
 
     from tasker import task
     app.register_blueprint(task.views.bp)
+
+    from tasker import error
+    app.register_blueprint(error.handlers.bp)
 
     @app.cli.command('create-db')
     def create_db():
