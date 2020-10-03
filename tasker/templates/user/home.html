@@ -2,10 +2,21 @@
 
 {% block content %}
 
-<h2>Tasks By: <span class="red-txt">{{ view }}</span> <i id="changeViewTrigger" style="font-size: 1em;" class="far fa-edit"></i></h2>
-<div id="hidden-container">
-  {% include "user/_change-view.html" %}
-</div>
+<h2>Tasks By:
+  <nav class="view">
+    <ul>
+        <li><a href="#">{{ view }} <i id="changeViewTrigger" class="far fa-edit" aria-hidden="true"></i></a>
+          <ul>
+              {% for view_option in views %}
+                {% if view_option != view %}
+                  <li><a href="?view={{ view_option }}">{{ view_option }}</a></li>
+                {% endif %}
+              {% endfor %}
+          </ul>
+        </li>
+    </ul>
+  </nav>
+</h2>
 
 <section id="home-main" class="five-row">
   {% for task in tasks %}

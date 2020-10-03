@@ -30,9 +30,11 @@ def register():
 @bp.route('/home', methods=['GET', 'POST'])
 @login_required
 def home():
+    views = ('Day', 'Week', 'Month')
     view = request.args.get('view', 'Day')
-    if view not in ('Day', 'Week', 'Month'):
-        return redirect(url_for('user.home', view='Day'))
+    if view not in views:
+        return redirect(url_for('user.home'))
+    
     user = {
     'username': 'test@testing.com', 'email' : 'test@testing.com', 'timezone' : 'EST', 'view' : 'Month'
     }
@@ -50,8 +52,7 @@ def home():
     {'id' : 5, 'due_date' : '10.5.2020', 'template': templates[2]},
     {'id' : 6, 'due_date' : '10.10.2020', 'template': templates[1]},
     ]
-    form = ChangeViewForm()
-    return render_template('user/home.html', title="Home", view=view, tasks=tasks, user=user, form=form)
+    return render_template('user/home.html', title="Home", view=view, views=views, tasks=tasks, user=user)
 
 
 @bp.route('/login', methods=['GET', 'POST'])
