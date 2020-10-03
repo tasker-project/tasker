@@ -4,7 +4,7 @@ from wtforms.validators import DataRequired, EqualTo, Email
 
 
 class ChangeViewForm(FlaskForm):
-    select_view = RadioField('select_view', default='Day', choices=[('Day', 'Day'), ('Week', 'Week'), ('Month','Month')], validators=[DataRequired()])
+    view = RadioField('view', default='Day', choices=[('Day', 'Day'), ('Week', 'Week'), ('Month','Month')], validators=[DataRequired()])
 
 
 class SignUpForm(FlaskForm):

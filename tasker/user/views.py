@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, redirect, request, url_for, flash
 
 from werkzeug.urls import url_parse
+from werkzeug.exceptions import NotFound
 from flask_login import current_user, login_user, login_required, logout_user
 from tasker.app import bcrypt
 from tasker.models import db, User
@@ -29,6 +30,9 @@ def register():
 @bp.route('/home', methods=['GET', 'POST'])
 @login_required
 def home():
+    view = request.args.get('view', 'Day')
+    if view not in ('Day', 'Week', 'Month'):
+        return redirect(url_for('user.home', view='Day'))
     user = {
     'username': 'test@testing.com', 'email' : 'test@testing.com', 'timezone' : 'EST', 'view' : 'Month'
     }
@@ -47,12 +51,7 @@ def home():
     {'id' : 6, 'due_date' : '10.10.2020', 'template': templates[1]},
     ]
     form = ChangeViewForm()
-    if form.validate_on_submit():
-        view = form.select_view.data
-        change_view = {'view': view}
-        user.update(change_view)
-        return render_template('user/home.html', title="Home", tasks=tasks, user=user, form=form)
-    return render_template('user/home.html', title="Home", tasks=tasks, user=user, form=form)
+    return render_template('user/home.html', title="Home", view=view, tasks=tasks, user=user, form=form)
 
 
 @bp.route('/login', methods=['GET', 'POST'])

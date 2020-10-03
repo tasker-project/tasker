@@ -1,9 +1,8 @@
 
 <div id="changeView" class="hidden" align="center">
-  <form action="" method="POST" nonvalidate>
-    {{ form.csrf_token }}
+  <form action="" method="GET" nonvalidate>
     <h3>Select View</h3>
-    {% for subfield in form.select_view %}
+    {% for subfield in form.view %}
     <tr>
       <td>{{ subfield }}</td>
       <td>{{ subfield.label }}</td>
