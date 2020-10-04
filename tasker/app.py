@@ -37,9 +37,11 @@ def create_app(config_object='tasker.settings'):
 
     from tasker import job_template
     app.register_blueprint(job_template.views.bp)
+
     app.jinja_env.filters['friendly_date'] = job_template.views.friendly_date
     app.jinja_env.filters['intervalify'] = job_template.views.intervalify
     app.jinja_env.filters['hourify'] = job_template.views.hourify
+    app.jinja_env.filters['friendly_date_time'] = user.views.friendly_date_time
 
     from tasker import task
     app.register_blueprint(task.views.bp)
