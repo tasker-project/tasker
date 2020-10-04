@@ -40,7 +40,7 @@ class JobTemplateForm(FlaskForm):
         ('3', 'Month(s) (30 days)')
     ])
     #validators=[DataRequired()])
-    starting_date = DateField('Starting', validators=[DataRequired()], format='%Y-%m-%d')
+    starting_date = DateField('Starting', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
     def validate_starting_date(form, field):

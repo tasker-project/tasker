@@ -4,7 +4,6 @@ from pytz import timezone
 from tasker.models import db, Task, TaskStatus
 from flask_login import current_user, login_required
 from tasker.task.forms import SnoozeTaskForm
-from tasker.job_template.views import friendly_date, hourify
 
 bp = Blueprint('task', __name__, static_folder='../static')
 
