@@ -1,14 +1,22 @@
-from flask import Blueprint, render_template, redirect, request, url_for, flash
+import time
+import datetime
 
 from werkzeug.urls import url_parse
 from werkzeug.exceptions import NotFound
+from flask import Blueprint, render_template, redirect, request, url_for, flash
 from flask_login import current_user, login_user, login_required, logout_user
+from pytz import timezone
+
 from tasker.app import bcrypt
-from tasker.models import db, User
+from tasker.models import db, User, Task
 from tasker.user.forms import ChangeViewForm, SignInForm, SignUpForm
 
 bp = Blueprint('user', __name__, static_folder='../static')
 
+
+def friendly_date_time(d):
+    starting_date = datetime.datetime.fromtimestamp(d, tz=timezone(current_user.timezone))
+    return starting_date.strftime('%B %d, %Y %I:%M %p')
 
 
 @bp.route('/register', methods=['GET', 'POST'])
@@ -25,34 +33,32 @@ def register():
             return redirect(url_for('user.home'))
     return render_template('user/register.html', form=form)
 
-@bp.route('/', methods=['GET', 'POST'])
 
-@bp.route('/home', methods=['GET', 'POST'])
+@bp.route('/')
+@bp.route('/home')
 @login_required
 def home():
     views = ('Day', 'Week', 'Month')
+    # Get the current view preference from querystring
     view = request.args.get('view', 'Day')
     if view not in views:
         return redirect(url_for('user.home'))
-    
-    user = {
-    'username': 'test@testing.com', 'email' : 'test@testing.com', 'timezone' : 'EST', 'view' : 'Month'
-    }
-    templates = [
-    {'id': 0, 'title':'Template 1', 'start_date' : '09.10.2020', 'interval': 3, 'interval_type' : 'Weeks', 'description' : 'Job Template description goes here.'},
-    {'id': 1, 'title': 'Template 2', 'start_date' : '09.15.2020', 'interval': 5, 'interval_type' : 'Days', 'description' : 'Job Template description goes here.'},
-    {'id' : 2, 'title':'Template 3', 'start_date' : '09.20.2020', 'interval' : 1, 'interval_type' : 'Months', 'description' : 'Job Template description goes here.'}
-    ]
-    tasks = [
-    {'id' : 0, 'due_date' : '9.10.2020', 'template': templates[0]},
-    {'id' : 1, 'due_date' : '9.20.2020', 'template': templates[1]},
-    {'id' : 2, 'due_date' : '9.25.2020', 'template': templates[1]},
-    {'id' : 3, 'due_date' : '9.30.2020', 'template': templates[1]},
-    {'id' : 4, 'due_date' : '10.5.2020', 'template': templates[1]},
-    {'id' : 5, 'due_date' : '10.5.2020', 'template': templates[2]},
-    {'id' : 6, 'due_date' : '10.10.2020', 'template': templates[1]},
-    ]
-    return render_template('user/home.html', title="Home", view=view, views=views, tasks=tasks, user=user)
+    # Get current time
+    now = int(time.time())
+    tz = timezone(current_user.timezone)
+    # Convert to user's timezone and shift to the end of current calendar day
+    timestamp = datetime.datetime.\
+        fromtimestamp(now, tz=tz).\
+        replace(hour=23, minute=59, second=59)
+    # Add days depending on view
+    if view == 'Week':
+        timestamp = timestamp + datetime.timedelta(days=6)
+    elif view == 'Month':
+        timestamp = timestamp + datetime.timedelta(days=30)
+    due_date = int(timestamp.timestamp())
+    # Query for user's tasks with due dates less than calculated timestamp
+    tasks = Task.query.filter(Task.owner == current_user, Task.due_date <= due_date)
+    return render_template('user/home.html', title="Home", view=view, views=views, tasks=tasks, user=current_user)
 
 
 @bp.route('/login', methods=['GET', 'POST'])
@@ -74,6 +80,7 @@ def login():
             next_page = url_for('user.home')
         return redirect(url_for('user.home'))
     return render_template('user/login.html', title="Login", form=form)
+
 
 @bp.route('/logout')
 def logout():
