@@ -1,6 +1,9 @@
+from datetime import datetime
 from flask import Blueprint, render_template, flash, redirect, url_for
-from tasker.models import db
-#from tasker.task.forms import EditTaskForm, SnoozeTaskForm
+from tasker.models import db, Task
+from flask_login import current_user, login_required
+from tasker.task.forms import SnoozeTaskForm
+from tasker.job_template.views import friendly_date, hourify
 
 bp = Blueprint('task', __name__, static_folder='../static')
 
@@ -33,11 +36,18 @@ def task_detail(id):
 def add_task():
     return render_template('task/add-task.html', title="Create Task")
 
-@bp.route('/snooze/<id>')
+@bp.route('/snooze/<id>', methods=['GET', 'POST'])
 #@login_required
 def snooze(id):
-    id=id
-    return render_template('task/snooze.html', title="Snooze", id=id)
+    task = Task.query.get(id)
+
+    if not task.owner == current_user:
+        flash("Unexpected task error. Please try again.")
+        return redirect(url_for('user.home'))
+    form = SnoozeTaskForm()
+
+
+    return render_template('task/snooze.html', title="Snooze", task=task, form=form)
 
 @bp.route('/archive')
 #@login_required

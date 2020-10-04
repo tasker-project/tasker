@@ -40,7 +40,7 @@ class JobTemplateForm(FlaskForm):
         ('3', 'Month(s) (30 days)')
     ])
     #validators=[DataRequired()])
-    starting_date = DateField('Starting', validators=[DataRequired()])
+    starting_date = DateField('Starting', validators=[DataRequired()], format='%Y-%m-%d')
     submit = SubmitField('Submit')
 
     def validate_starting_date(form, field):
@@ -50,7 +50,3 @@ class JobTemplateForm(FlaskForm):
         return
         if len(field.data) > 50:
             raise ValidationError('Name must be less than 50 characters')
-
-
-
-
