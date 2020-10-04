@@ -3,9 +3,6 @@ from wtforms import StringField,IntegerField, SubmitField, PasswordField, Select
 from wtforms.validators import DataRequired, EqualTo, Email
 
 
-class ChangeViewForm(FlaskForm):
-    select_view = RadioField('select_view', default='Day', choices=[('Day', 'Day'), ('Week', 'Week'), ('Month','Month')], validators=[DataRequired()])
-
 class SignUpForm(FlaskForm):
     email_address = StringField('Email', [DataRequired(), Email()])
     password = PasswordField('Password', [DataRequired(), EqualTo('confirm_password', message='Passwords must match')])

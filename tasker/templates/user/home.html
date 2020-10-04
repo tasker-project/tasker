@@ -2,16 +2,27 @@
 
 {% block content %}
 
-<h2>Tasks By: <span class="red-txt">{{ user.view }}</span> <i id="changeViewTrigger" style="font-size: 1em;" class="far fa-edit"></i></h2>
-<div id="hidden-container">
-  {% include "user/_change-view.html" %}
-</div>
+<h2>Tasks By:
+  <nav class="view">
+    <ul>
+        <li><a href="#">{{ view }} <i id="changeViewTrigger" class="far fa-edit" aria-hidden="true"></i></a>
+          <ul>
+              {% for view_option in views %}
+                {% if view_option != view %}
+                  <li><a href="?view={{ view_option }}">{{ view_option }}</a></li>
+                {% endif %}
+              {% endfor %}
+          </ul>
+        </li>
+    </ul>
+  </nav>
+</h2>
 
 <section id="home-main" class="five-row">
   {% for task in tasks %}
   <div align="center" class="five task">
-    <a href="{{ url_for('task.task_detail', id=task.id) }}" class="task-name"><strong>{{ task.template.title }}</strong></a>
-    <p>Due: {{ task.due_date }}</p>
+    <a href="{{ url_for('task.task_detail', id=task.id) }}" class="task-name"><strong>{{ task.name }}</strong></a>
+    <p>Due: {{ task.due_date | friendly_date_time }}</p>
     <a href="{{ url_for('task.snooze', id=task.id) }}" class='snooze link-btn'>Snooze</a>
     <br><a class="delete" href="{{ url_for('task.delete_task', id=task.id) }}" class="delete">Delete</a>
   </div>

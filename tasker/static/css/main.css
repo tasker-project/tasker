@@ -228,7 +228,7 @@ input {
   }
 
   #changeView {
-    width: 30%;
+    width: 20%;
   }
 }
 
@@ -247,4 +247,56 @@ input.auto-width {
 }
 textarea {
   width: 100%;
+}
+
+
+nav.view {
+  display: inline-block;
+  width: 120px;
+}
+
+nav.view > ul {
+  padding-left: 5px;
+}
+nav.view  ul  li {
+  width: 130px;
+}
+
+nav.view li {
+   display: inline-block;
+   list-style-type: none;
+   position: relative;
+}
+
+nav.view li ul {
+   display: none;
+   position: absolute;
+   width: 100px;
+   left: 0;
+   top: 100%;
+   margin: 0;
+   padding: 0;
+}
+
+nav.view li:hover > ul {
+   display: block;
+}
+nav.view a:hover {
+   color: #222;
+}
+
+nav.view a {
+   padding: 5px 10px 18px 10px;
+   color: #ca241c;
+   text-align: left;
+   background: #eee;
+   height: 20px;
+   display: block;
+   border-radius: 5px;
+}
+
+nav.view a i {
+  float: right;
+  padding-left: 4px;
+  font-size: 1em;
 }
