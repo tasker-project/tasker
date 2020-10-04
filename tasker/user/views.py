@@ -69,10 +69,10 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(email_address=form.email_address.data).first()
         if user is None:
-            flash('Wrong username or password. Please try again.')
+            flash('Wrong username or password. Please try again.', 'error')
             return redirect(url_for('user.login'))
         if bcrypt.check_password_hash(user.password, form.password.data) == False:
-            flash('Wrong username or password. Please try again.')
+            flash('Wrong username or password. Please try again.', 'error')
             return redirect(url_for('user.login'))
         login_user(user)
         next_page = request.args.get('next')
