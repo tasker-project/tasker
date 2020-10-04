@@ -9,7 +9,7 @@ from pytz import timezone
 
 from tasker.app import bcrypt
 from tasker.models import db, User, Task
-from tasker.user.forms import ChangeViewForm, SignInForm, SignUpForm
+from tasker.user.forms import SignInForm, SignUpForm
 
 bp = Blueprint('user', __name__, static_folder='../static')
 
