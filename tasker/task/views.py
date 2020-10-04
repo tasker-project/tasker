@@ -1,6 +1,7 @@
-from datetime import datetime
 from flask import Blueprint, render_template, flash, redirect, url_for
-from tasker.models import db, Task
+import pytz, datetime
+from pytz import timezone
+from tasker.models import db, Task, TaskStatus
 from flask_login import current_user, login_required
 from tasker.task.forms import SnoozeTaskForm
 from tasker.job_template.views import friendly_date, hourify
@@ -45,8 +46,20 @@ def snooze(id):
         flash("Unexpected task error. Please try again.")
         return redirect(url_for('user.home'))
     form = SnoozeTaskForm()
-
-
+    if form.validate_on_submit():
+        user_tz = timezone(current_user.timezone)
+        due = form.due_date.data
+        snooze_date = datetime.datetime.combine(due, datetime.time(task.job_template.hour, 0))
+        snooze_date = user_tz.localize(snooze_date)
+        task.due_date = int(snooze_date.timestamp())
+        task.status = TaskStatus.Snoozed
+        desc = task.description
+        note = form.note.data
+        task.description = desc + "\n" + note
+        db.session.add(task)
+        db.session.commit()
+        flash("Task Snoozed", 'success')
+        return redirect(url_for('user.home'))
     return render_template('task/snooze.html', title="Snooze", task=task, form=form)
 
 @bp.route('/archive')
