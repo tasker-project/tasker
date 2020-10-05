@@ -84,7 +84,7 @@ def archive():
 @login_required
 def delete_task(id):
     task = Task.query.get(id)
-    form = DeleteTastForm()
+    form = DeleteTaskForm()
     if not task.owner == current_user:
         flash("Unexpected task error. Please try again.", 'error')
         return redirect(url_for('user.home'))
