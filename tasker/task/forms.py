@@ -14,5 +14,5 @@ class SnoozeTaskForm(FlaskForm):
     note = StringField('Note', [validators.Length(min=0, max=1000)])
     submit = SubmitField('Snooze')
 
-class DeleteTastForm(FlaskForm):
+class DeleteTaskForm(FlaskForm):
     submit = SubmitField('Delete')

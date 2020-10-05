@@ -3,7 +3,7 @@ import pytz, datetime
 from pytz import timezone
 from tasker.models import db, Task, TaskStatus
 from flask_login import current_user, login_required
-from tasker.task.forms import SnoozeTaskForm, DeleteTastForm
+from tasker.task.forms import SnoozeTaskForm, DeleteTaskForm
 
 bp = Blueprint('task', __name__, static_folder='../static')
 
