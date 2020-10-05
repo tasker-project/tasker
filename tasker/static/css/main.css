@@ -58,7 +58,7 @@ button, input[type="submit" i], .link-btn {
   width: 100px;
 }
 
-button:hover, .link-btn:hover {
+button:hover, .link-btn:hover, .complete:hover {
   color: #ca241c;
 }
 
@@ -135,6 +135,10 @@ i {
 .task-name {
   font-family: 'Racing Sans One', cursive;
   font-size: 1.5em;
+}
+
+.complete {
+  float: left;
 }
 
 .snooze {

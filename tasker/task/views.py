@@ -36,13 +36,26 @@ def task_detail(id):
 def add_task():
     return render_template('task/add-task.html', title="Create Task")
 
+@bp.route('/task_complete/<id>')
+@login_required
+def task_complete(id):
+    task = Task.query.get(id)
+    if not task.owner == current_user:
+        flash("Unexpected task error. Please try again.", 'error')
+        return redirect(url_for('user.home'))
+    task.status = TaskStatus.Completed
+    db.session.add(task)
+    db.session.commit()
+    flash("Task marked complete", 'success')
+    return redirect(url_for('user.home'))
+
+
 @bp.route('/snooze/<id>', methods=['GET', 'POST'])
-#@login_required
+@login_required
 def snooze(id):
     task = Task.query.get(id)
-
     if not task.owner == current_user:
-        flash("Unexpected task error. Please try again.")
+        flash("Unexpected task error. Please try again.", 'error')
         return redirect(url_for('user.home'))
     form = SnoozeTaskForm()
     if form.validate_on_submit():
