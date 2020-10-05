@@ -13,3 +13,6 @@ class SnoozeTaskForm(FlaskForm):
     due_date = DateField('Due Date', validators=[DataRequired()])
     note = StringField('Note', [validators.Length(min=0, max=1000)])
     submit = SubmitField('Snooze')
+
+class DeleteTastForm(FlaskForm):
+    submit = SubmitField('Delete')
