@@ -19,6 +19,21 @@ def friendly_date_time(d):
     return starting_date.strftime('%B %d, %Y %I:%M %p')
 
 
+def split_tasks(tasks, today):
+    yeterday = today - 86400 # Seconds in a day
+    past_due_tasks = []
+    current_tasks = []
+    future_tasks = []
+    for task in tasks:
+        if task.due_date <= yeterday:
+            past_due_tasks.append(task)
+        elif task.due_date <= today:
+            current_tasks.append(task)
+        else:
+            future_tasks.append(task)
+    return past_due_tasks, current_tasks, future_tasks
+
+
 @bp.route('/register', methods=['GET', 'POST'])
 def register():
     form = SignUpForm()
@@ -50,6 +65,7 @@ def home():
     timestamp = datetime.datetime.\
         fromtimestamp(now, tz=tz).\
         replace(hour=23, minute=59, second=59)
+    today = int(timestamp.timestamp())
     # Add days depending on view
     if view == 'Week':
         timestamp = timestamp + datetime.timedelta(days=6)
@@ -57,8 +73,19 @@ def home():
         timestamp = timestamp + datetime.timedelta(days=30)
     due_date = int(timestamp.timestamp())
     # Query for user's tasks with due dates less than calculated timestamp
-    tasks = Task.query.filter(Task.owner == current_user, Task.due_date <= due_date, Task.status != TaskStatus.Completed)
-    return render_template('user/home.html', title="Home", view=view, views=views, tasks=tasks, user=current_user)
+    tasks = Task.query.\
+        filter(
+            Task.owner == current_user,
+            Task.due_date <= due_date,
+            Task.status != TaskStatus.Completed).\
+        order_by(Task.due_date.asc())
+    past_due_tasks, current_tasks, future_tasks = split_tasks(tasks, today)
+    return render_template(
+        'user/home.html', title="Home", view=view,
+        views=views, past_due_tasks=past_due_tasks,
+        current_tasks=current_tasks, future_tasks=future_tasks,
+        user=current_user
+    )
 
 
 @bp.route('/login', methods=['GET', 'POST'])

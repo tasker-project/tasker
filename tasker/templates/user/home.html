@@ -18,8 +18,14 @@
   </nav>
 </h2>
 
-<section id="home-main" class="five-row">
-  {% for task in tasks %}
+{% if not past_due_tasks and not current_tasks and not future_tasks %}
+<h3 align="center">You have no tasks. Why not create a <a href="{{ url_for('task.add_task') }}">task</a> or <a href="{{ url_for('job_template.add_template') }}">template</a>?</h3>
+{% endif %}
+
+{% if past_due_tasks %}
+<h3>Past Due Tasks</h3>
+<section class="five-row">
+  {% for task in past_due_tasks %}
   <div align="center" class="five task">
     <a href="{{ url_for('task.task_complete', id=task.id) }}"><i class="fas fa-check-square complete"></i></a><br><br>
     <a href="{{ url_for('task.task_detail', id=task.id) }}" class="task-name"><strong>{{ task.name }}</strong></a>
@@ -29,5 +35,36 @@
   </div>
   {% endfor %}
 </section>
+{% endif %}
+
+{% if current_tasks %}
+<h3>Current Tasks</h3>
+<section class="five-row">
+  {% for task in current_tasks %}
+  <div align="center" class="five task">
+    <a href="{{ url_for('task.task_complete', id=task.id) }}"><i class="fas fa-check-square complete"></i></a><br><br>
+    <a href="{{ url_for('task.task_detail', id=task.id) }}" class="task-name"><strong>{{ task.name }}</strong></a>
+    <p>Due: {{ task.due_date | friendly_date_time }}</p>
+    <a href="{{ url_for('task.snooze', id=task.id) }}" class='snooze link-btn'>Snooze</a>
+    <br><a class="delete" href="{{ url_for('task.delete_task', id=task.id) }}" class="delete">Delete</a>
+  </div>
+  {% endfor %}
+</section>
+{% endif %}
+
+{% if future_tasks %}
+<h3>Future Tasks</h3>
+<section class="five-row">
+  {% for task in future_tasks %}
+  <div align="center" class="five task">
+    <a href="{{ url_for('task.task_complete', id=task.id) }}"><i class="fas fa-check-square complete"></i></a><br><br>
+    <a href="{{ url_for('task.task_detail', id=task.id) }}" class="task-name"><strong>{{ task.name }}</strong></a>
+    <p>Due: {{ task.due_date | friendly_date_time }}</p>
+    <a href="{{ url_for('task.snooze', id=task.id) }}" class='snooze link-btn'>Snooze</a>
+    <br><a class="delete" href="{{ url_for('task.delete_task', id=task.id) }}" class="delete">Delete</a>
+  </div>
+  {% endfor %}
+</section>
+{% endif %}
 
 {% endblock %}
