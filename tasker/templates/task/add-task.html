@@ -1,7 +1,24 @@
+{% from "form_errors.html" import field_error %}
 {% extends "base.html" %}
-
 {% block content %}
-<section class="include">
-  <h2>Add Task Form Goes Here</h2>
-</section>
+<div class="form-wrapper">
+  <h1>Create Task</h1>
+  <form class="task" action="" method="POST">
+      {{ form.hidden_tag() }}
+  <p>
+    {{ form.job_template_id.label }}: <select id="job_template_id" name="job_template_id">
+    {% for job in jobs %}
+      <option value="{{job.id}}">{{ job.name }}</option>
+    {% endfor %}
+    </select>
+  </p>
+  <p>{{ form.name.label }}:  {{ form.name}} {{ field_error(form.name) }}</p>
+  <p>{{ form.due_date.label }}: {{ form.due_date(class_='auto-width') }}</p>
+  <p>{{ field_error(form.due_date) }}</p>
+  <p>{{ form.description.label }}:  {{ form.description }} {{ field_error(form.description) }}</p>
+  <p class="right">
+      {{ form.submit }}
+  </p>
+</form>
+</div>
 {% endblock %}

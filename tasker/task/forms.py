@@ -3,10 +3,11 @@ from wtforms import StringField,IntegerField, SubmitField, PasswordField, Select
 from wtforms.fields.html5 import DateField
 from wtforms.validators import DataRequired
 
-class Task(FlaskForm):
+class TaskForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     description = StringField('Description', validators=[DataRequired()])
     due_date = DateField('Due date', validators=[DataRequired()])
+    job_template_id = IntegerField('Template', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 class SnoozeTaskForm(FlaskForm):

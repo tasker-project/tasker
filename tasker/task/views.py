@@ -1,9 +1,10 @@
+from datetime import datetime
 from flask import Blueprint, render_template, flash, redirect, url_for
-import pytz, datetime
+import pytz
 from pytz import timezone
-from tasker.models import db, Task, TaskStatus
+from tasker.models import db, Task, TaskStatus, JobTemplate
 from flask_login import current_user, login_required
-from tasker.task.forms import SnoozeTaskForm
+from tasker.task.forms import TaskForm, SnoozeTaskForm
 
 bp = Blueprint('task', __name__, static_folder='../static')
 
@@ -31,10 +32,29 @@ def task_detail(id):
 
     return render_template("task/task-detail.html", title="Task Detail", user=user, task=task)
 
-@bp.route('/add_task')
-#@login_required
+@bp.route('/add_task', methods=['GET', 'POST'])
+@login_required
 def add_task():
-    return render_template('task/add-task.html', title="Create Task")
+    form = TaskForm()
+    jobs = db.session.query(JobTemplate).filter(JobTemplate.user_email_address == current_user.email_address)
+    if form.validate_on_submit():
+        template = JobTemplate.query.get(form.job_template_id.data)
+        if not template:
+            raise NotFound('Job template not found')
+
+        user_tz = timezone(current_user.timezone)
+        due_date = user_tz.localize(datetime.combine(form.due_date.data, datetime.min.time()))
+        task = Task.create_task(
+            form.name.data, form.description.data,
+            TaskStatus.Pending, due_date
+        )
+        task.owner = current_user
+        task.job_template = template
+        db.session.add(task)
+        db.session.commit()
+        flash('Successfully created task', 'success')
+        return redirect(url_for('user.home'))
+    return render_template('task/add-task.html', title="Create Task", form=form, jobs=jobs)
 
 @bp.route('/task_complete/<id>')
 @login_required
