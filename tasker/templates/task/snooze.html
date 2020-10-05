@@ -1,10 +1,23 @@
+{% from "form_errors.html" import field_error %}
 {% extends "base.html" %}
 
 {% block content %}
 
 <section class="include">
-  <h2>Snooze Form Goes Here</h2>
-  <p>Snoozing Task: {{ id }} </p>
+  <div class="form-wrapper">
+    <h1>Snooze {{ task.name }}</h1>
+    <p>Original Due Date: {{ task.due_date | friendly_date }} at {{ task.job_template.hour | hourify}}</p>
+    <form class="task" action="" method="POST">
+      {{ form.hidden_tag() }}
+      <h2>New Due Date</h2>
+      <p>{{ form.due_date(class_='auto-width') }}</p>
+      <p>{{ field_error(form.due_date) }}</p>
+      <p>{{ form.note.label }} {{ form.note }}</p>
+      <p>{{field_error(form.note) }}</p>
+      <p class="right">{{ form.submit }}</p>
+    </form>
+  </div>
+
 </section>
 
 {% endblock %}

@@ -1,5 +1,4 @@
 from tasker.models import db, User, JobTemplate, Task, TaskStatus
-from pytz import timezone
 import datetime, pytz
 from pytz import timezone
 

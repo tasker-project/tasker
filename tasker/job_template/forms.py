@@ -50,7 +50,3 @@ class JobTemplateForm(FlaskForm):
         return
         if len(field.data) > 50:
             raise ValidationError('Name must be less than 50 characters')
-
-
-
-

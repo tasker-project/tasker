@@ -1,6 +1,9 @@
 from flask import Blueprint, render_template, flash, redirect, url_for
-from tasker.models import db
-#from tasker.task.forms import EditTaskForm, SnoozeTaskForm
+import pytz, datetime
+from pytz import timezone
+from tasker.models import db, Task, TaskStatus
+from flask_login import current_user, login_required
+from tasker.task.forms import SnoozeTaskForm
 
 bp = Blueprint('task', __name__, static_folder='../static')
 
@@ -33,11 +36,30 @@ def task_detail(id):
 def add_task():
     return render_template('task/add-task.html', title="Create Task")
 
-@bp.route('/snooze/<id>')
+@bp.route('/snooze/<id>', methods=['GET', 'POST'])
 #@login_required
 def snooze(id):
-    id=id
-    return render_template('task/snooze.html', title="Snooze", id=id)
+    task = Task.query.get(id)
+
+    if not task.owner == current_user:
+        flash("Unexpected task error. Please try again.")
+        return redirect(url_for('user.home'))
+    form = SnoozeTaskForm()
+    if form.validate_on_submit():
+        user_tz = timezone(current_user.timezone)
+        due = form.due_date.data
+        snooze_date = datetime.datetime.combine(due, datetime.time(task.job_template.hour, 0))
+        snooze_date = user_tz.localize(snooze_date)
+        task.due_date = int(snooze_date.timestamp())
+        task.status = TaskStatus.Snoozed
+        desc = task.description
+        note = form.note.data
+        task.description = desc + "\n" + note
+        db.session.add(task)
+        db.session.commit()
+        flash("Task Snoozed", 'success')
+        return redirect(url_for('user.home'))
+    return render_template('task/snooze.html', title="Snooze", task=task, form=form)
 
 @bp.route('/archive')
 #@login_required
