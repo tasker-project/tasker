@@ -6,7 +6,7 @@
 <section id="home-main" class="five-row">
   {% for job in jobs %}
   <div align="center" class="five task">
-    <a href="{{ url_for('job_template.template_detail', id=job.id) }}" class="task-name"><strong>{{ job.name }}</strong></a> <a href="{{ url_for('job_template.edit_template', id=job.id) }}"> <i style="font-size: 2em;" class="far fa-edit" aria-hidden="true"></i> </a> <a href="{{ url_for('job_template.delete_template', id=job.id) }}"> <i style="font-size: 2em;" class="far fa-delete" aria-hidden="true"></i> </a>
+    <a href="{{ url_for('job_template.template_detail', id=job.id) }}" class="task-name"><strong>{{ job.name }}</strong></a> <a href="{{ url_for('job_template.edit_template', id=job.id) }}"> <i style="font-size: 2em;" class="far fa-edit" aria-hidden="true"></i> </a> <a href="{{ url_for('job_template.delete_template', id=job.id) }}"> <i style="font-size: 2em;" class="far fa-trash-alt" aria-hidden="true"></i></a>
     <p><strong class="red-txt">Due:</strong> At <strong>{{ job.hour | hourify }}</strong> every <strong>{{ job.repetition }} {{ job.interval | intervalify }}</strong> beginning <strong>{{ job.starting_date | friendly_date }}</strong>.</p>
   </div>
   {% endfor %}
