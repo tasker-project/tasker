@@ -36,12 +36,7 @@ def task_detail(id):
 @login_required
 def add_task():
     form = TaskForm()
-    jobs = db.session.query(JobTemplate).filter(JobTemplate.user_email_address == current_user.email_address)
     if form.validate_on_submit():
-        template = JobTemplate.query.get(form.job_template_id.data)
-        if not template:
-            raise NotFound('Job template not found')
-
         user_tz = timezone(current_user.timezone)
         due_date = user_tz.localize(datetime.combine(form.due_date.data, datetime.min.time()))
         task = Task.create_task(
@@ -49,12 +44,11 @@ def add_task():
             TaskStatus.Pending, due_date
         )
         task.owner = current_user
-        task.job_template = template
         db.session.add(task)
         db.session.commit()
         flash('Successfully created task', 'success')
         return redirect(url_for('user.home'))
-    return render_template('task/add-task.html', title="Create Task", form=form, jobs=jobs)
+    return render_template('task/add-task.html', title="Create Task", form=form)
 
 @bp.route('/task_complete/<id>')
 @login_required
