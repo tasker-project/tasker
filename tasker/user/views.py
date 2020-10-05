@@ -8,7 +8,7 @@ from flask_login import current_user, login_user, login_required, logout_user
 from pytz import timezone
 
 from tasker.app import bcrypt
-from tasker.models import db, User, Task
+from tasker.models import db, User, Task, TaskStatus
 from tasker.user.forms import SignInForm, SignUpForm
 
 bp = Blueprint('user', __name__, static_folder='../static')
@@ -57,7 +57,7 @@ def home():
         timestamp = timestamp + datetime.timedelta(days=30)
     due_date = int(timestamp.timestamp())
     # Query for user's tasks with due dates less than calculated timestamp
-    tasks = Task.query.filter(Task.owner == current_user, Task.due_date <= due_date)
+    tasks = Task.query.filter(Task.owner == current_user, Task.due_date <= due_date, Task.status != TaskStatus.Completed)
     return render_template('user/home.html', title="Home", view=view, views=views, tasks=tasks, user=current_user)
 
 
