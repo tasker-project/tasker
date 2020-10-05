@@ -1,0 +1,15 @@
+{% from "form_errors.html" import field_error %}
+{% extends "base.html" %}
+{% block content %}
+<div class="form-wrapper">
+    <h1>Delete Template</h1>
+    <form class="task" action="" method="POST">
+        {{ form.hidden_tag() }}
+        <p><strong>Name: </strong>{{ name }}</p>
+        <p><strong>Deleting this template will delete all associated tasks. Are you sure you want to continue?</strong></p>
+    <p class="right">
+        {{ form.submit }} <a class="link-btn" href="{{ url_for('job_template.templates') }}">Cancel</a> 
+    </p>
+</form>
+</div>
+{% endblock %}

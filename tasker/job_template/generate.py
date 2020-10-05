@@ -29,15 +29,16 @@ def generate_tasks(template_id):
     db.session.commit()
     return 1
 
+
 def delete_tasks(template_id):
     template = JobTemplate.query.get(template_id)
-    tasks = Task.query.filter_by(job_template=template)
+    tasks = Task.query.filter(Task.job_template == template, Task.status != TaskStatus.Completed)
     for t in tasks:
         db.session.delete(t)
     db.session.commit()
     return 1
 
+
 def update_job_template(template_id):
     delete_tasks(template_id)
     generate_tasks(template_id)
-    return 1

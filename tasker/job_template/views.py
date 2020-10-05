@@ -7,8 +7,8 @@ from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import current_user, login_required
 
 from tasker.models import db, JobTemplate
-from tasker.job_template.forms import JobTemplateForm
-from tasker.job_template.generate import generate_tasks, delete_tasks
+from tasker.job_template.forms import JobTemplateForm, DeleteConfirmationForm
+from tasker.job_template.generate import generate_tasks, delete_tasks, update_job_template
 
 bp = Blueprint('job_template', __name__, static_folder='../static')
 
@@ -104,16 +104,25 @@ def edit_template(id):
         template.starting_date = int(starting_date.timestamp())
         db.session.add(template)
         db.session.commit()
-        delete_tasks(template.id)
-        generate_tasks(template.id)
+        update_job_template(template.id)
         flash('Successfully updated template', 'success')
         return redirect(url_for('job_template.template_detail', id=template.id))
     return render_template('job-template/edit-template.html', title="Edit Template", form=form)
 
 
-@bp.route('/delete_template/<id>')
-#@login_required
+@bp.route('/delete_template/<id>', methods=['GET', 'POST'])
+@login_required
 def delete_template(id):
-    id=id
-    flash("Template deleted")
-    return redirect(url_for('job_template.templates'))
+    form = DeleteConfirmationForm()
+    template = JobTemplate.query.get_or_404(id)
+    name = template.name
+    if template.owner != current_user:
+        raise NotFound('Template not found')
+    if form.validate_on_submit():
+        delete_tasks(template.id)
+        db.session.delete(template)
+        db.session.commit()
+        flash("Template deleted")
+        flash(f'Successfully deleted template: {name}', 'success')
+        return redirect(url_for('user.home'))
+    return render_template('job-template/delete-template.html', title="Delete Template?", form=form, id=id, name=name)
