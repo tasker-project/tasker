@@ -62,9 +62,10 @@ def snooze(id):
     return render_template('task/snooze.html', title="Snooze", task=task, form=form)
 
 @bp.route('/archive')
-#@login_required
+@login_required
 def archive():
-    return render_template('task/archive.html', title="Archive")
+    tasks = Task.query.filter(Task.owner == current_user, Task.status == TaskStatus.Completed)
+    return render_template('task/archive.html', title="Archive", tasks=tasks)
 
 @bp.route('/delete_task/<id>')
 #@login_required

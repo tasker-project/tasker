@@ -3,8 +3,15 @@
 {% block content %}
 <section class="include">
   <h2>Archived Tasks</h2>
-  {% for a in archive %}
-  
+</section>
+
+<section id="home-main" class="five-row">
+  {% for task in tasks %}
+  <div align="center" class="five task">
+    <a href="{{ url_for('task.task_detail', id=task.id) }}" class="task-name"><strong>{{ task.name }}</strong></a>
+    <p><strong class="red-txt">Due:</strong> {{ task.due_date | friendly_date_time }}</p>
+    <p><strong class="red-txt"><span class="red-txt">Description: </strong> {{ task.description }}</p>
+  </div>
   {% endfor %}
 </section>
 {% endblock %}
