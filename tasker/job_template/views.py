@@ -3,12 +3,12 @@ from datetime import datetime
 from werkzeug.exceptions import NotFound
 import pytz
 from pytz import timezone
-from flask import Blueprint, render_template, redirect, url_for, flash
+from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import current_user, login_required
 
 from tasker.models import db, JobTemplate
-from tasker.job_template.forms import JobTemplateForm
-from tasker.job_template.generate import generate_tasks
+from tasker.job_template.forms import JobTemplateForm, DeleteConfirmationForm
+from tasker.job_template.generate import generate_tasks, delete_tasks, update_job_template
 
 bp = Blueprint('job_template', __name__, static_folder='../static')
 
@@ -61,7 +61,7 @@ def add_template():
         generate_tasks(template.id)
         flash('Successfully created template', 'success')
         return redirect(url_for('user.home'))
-    return render_template('job-template/add-template.html', title="Create Template", form=form, user=current_user)
+    return render_template('job-template/add-template.html', title="Create Template", form=form)
 
 
 @bp.route('/template_detail/<id>')
@@ -80,16 +80,49 @@ def template_detail(id):
 
     return render_template('job-template/template-detail.html', title='Template Details', job=job)
 
-@bp.route('/edit_template/<id>')
-#@login_required
+
+@bp.route('/edit_template/<id>', methods=['GET', 'POST'])
+@login_required
 def edit_template(id):
-    id = id
-    return render_template('job-template/edit-template.html', title="Edit Template", id=id)
+    form = JobTemplateForm()
+    template = JobTemplate.query.get_or_404(id)
+    user_tz = timezone(current_user.timezone)
+    if template.owner != current_user:
+        raise NotFound('Template not found')
+    if request.method == 'GET':
+        form = JobTemplateForm(obj=template)
+        starting_date = user_tz.localize(datetime.fromtimestamp(template.starting_date))
+        form.starting_date.data = starting_date.date()
+    if form.validate_on_submit():
+        user_tz = timezone(current_user.timezone)
+        starting_date = user_tz.localize(datetime.combine(form.starting_date.data, datetime.min.time()))
+        template.name = form.name.data
+        template.description = form.description.data
+        template.repetition = form.repetition.data
+        template.interval = form.interval.data
+        template.hour = form.hour.data
+        template.starting_date = int(starting_date.timestamp())
+        db.session.add(template)
+        db.session.commit()
+        update_job_template(template.id)
+        flash('Successfully updated template', 'success')
+        return redirect(url_for('job_template.template_detail', id=template.id))
+    return render_template('job-template/edit-template.html', title="Edit Template", form=form)
 
 
-@bp.route('/delete_template/<id>')
-#@login_required
+@bp.route('/delete_template/<id>', methods=['GET', 'POST'])
+@login_required
 def delete_template(id):
-    id=id
-    flash("Template deleted")
-    return redirect(url_for('job_template.templates'))
+    form = DeleteConfirmationForm()
+    template = JobTemplate.query.get_or_404(id)
+    name = template.name
+    if template.owner != current_user:
+        raise NotFound('Template not found')
+    if form.validate_on_submit():
+        delete_tasks(template.id)
+        db.session.delete(template)
+        db.session.commit()
+        flash("Template deleted")
+        flash(f'Successfully deleted template: {name}', 'success')
+        return redirect(url_for('user.home'))
+    return render_template('job-template/delete-template.html', title="Delete Template?", form=form, id=id, name=name)

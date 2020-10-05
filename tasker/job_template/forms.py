@@ -3,6 +3,11 @@ from wtforms import StringField, SubmitField, PasswordField, SelectField, TextAr
 from wtforms.fields.html5 import IntegerField, DateField
 from wtforms.validators import DataRequired, EqualTo, email
 
+
+class DeleteConfirmationForm(FlaskForm):
+    submit = SubmitField('Delete')
+
+
 class JobTemplateForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     description = TextAreaField('Description', validators=[DataRequired()])
