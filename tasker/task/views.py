@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from flask import Blueprint, render_template, flash, redirect, url_for
 import pytz
 from pytz import timezone
@@ -39,11 +39,11 @@ def add_task():
     if form.validate_on_submit():
         user_tz = timezone(current_user.timezone)
         due_date = user_tz.localize(datetime.combine(form.due_date.data, datetime.min.time()))
+        due_date = due_date + timedelta(hours=int(form.hour.data))
         task = Task.create_task(
             form.name.data, form.description.data,
             TaskStatus.Pending, due_date
         )
-        task.hour = form.hour.data
         task.owner = current_user
         db.session.add(task)
         db.session.commit()
