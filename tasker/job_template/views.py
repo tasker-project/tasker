@@ -1,5 +1,4 @@
 from datetime import datetime
-
 from werkzeug.exceptions import NotFound
 import pytz
 from pytz import timezone

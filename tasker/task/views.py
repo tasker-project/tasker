@@ -43,6 +43,7 @@ def add_task():
             form.name.data, form.description.data,
             TaskStatus.Pending, due_date
         )
+        task.hour = form.hour.data
         task.owner = current_user
         db.session.add(task)
         db.session.commit()
