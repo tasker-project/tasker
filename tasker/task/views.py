@@ -1,9 +1,11 @@
+from datetime import datetime, timedelta, time
+import pytz
+
 from flask import Blueprint, render_template, flash, redirect, url_for, request
-import pytz, datetime
 from pytz import timezone
-from tasker.models import db, Task, TaskStatus
+from tasker.models import db, Task, TaskStatus, JobTemplate
 from flask_login import current_user, login_required
-from tasker.task.forms import SnoozeTaskForm, DeleteTaskForm
+from tasker.task.forms import TaskForm, SnoozeTaskForm, DeleteTaskForm
 
 bp = Blueprint('task', __name__, static_folder='../static')
 
@@ -31,10 +33,24 @@ def task_detail(id):
 
     return render_template("task/task-detail.html", title="Task Detail", user=user, task=task)
 
-@bp.route('/add_task')
-#@login_required
+@bp.route('/add_task', methods=['GET', 'POST'])
+@login_required
 def add_task():
-    return render_template('task/add-task.html', title="Create Task")
+    form = TaskForm()
+    if form.validate_on_submit():
+        user_tz = timezone(current_user.timezone)
+        due_date = user_tz.localize(datetime.combine(form.due_date.data, datetime.min.time()))
+        due_date = due_date + timedelta(hours=int(form.hour.data))
+        task = Task.create_task(
+            form.name.data, form.description.data,
+            TaskStatus.Pending, due_date
+        )
+        task.owner = current_user
+        db.session.add(task)
+        db.session.commit()
+        flash('Successfully created task', 'success')
+        return redirect(url_for('user.home'))
+    return render_template('task/add-task.html', title="Create Task", form=form)
 
 @bp.route('/task_complete/<id>')
 @login_required
@@ -61,7 +77,7 @@ def snooze(id):
     if form.validate_on_submit():
         user_tz = timezone(current_user.timezone)
         due = form.due_date.data
-        snooze_date = datetime.datetime.combine(due, datetime.time(task.job_template.hour, 0))
+        snooze_date = datetime.combine(due, time(task.job_template.hour, 0))
         snooze_date = user_tz.localize(snooze_date)
         task.due_date = int(snooze_date.timestamp())
         task.status = TaskStatus.Snoozed
