@@ -1,3 +1,5 @@
+# 2020-09-29 16:36:00 -0400 - Jeremy Axmacher - Add initial job template form and creation logic - lines:,22
+# 2020-09-10 17:51:11 -0400 - Jeremy Axmacher - Initial commit - lines:,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,23,24,25,26,27,28
 # -*- coding: utf-8 -*-
 """Application configuration.
 

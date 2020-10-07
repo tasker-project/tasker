@@ -1,3 +1,17 @@
+# 2020-10-05 08:28:49 -0400 - ADM Wayne Bryan - Added form to create a single task, /add_task - lines:,15,19,49,50,52,53,54,55,57,58,59,60,61,62,63,64,65
+# 2020-10-04 19:49:38 -0700 - Emily Martens - add completed button, routing. delete old home blueprint and jinja template. - lines:,68,69,70,71,72,73,74,75,76,77,78,79,80,81,83,87
+# 2020-09-19 16:30:14 -0700 - Emily Martens - add task blueprint with routes to task detail - lines:,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47
+# 2020-09-19 19:02:54 -0700 - Emily Martens - add views and navigation for add template, add task, and archive. - lines:,48,51,67,106,108
+# 2020-10-04 23:10:10 -0700 - Maged Bebawy - Added delete task - lines:,17,112,113,115,117,118,119,120,121,122,123,124,125
+# 2020-10-06 17:24:32 -0400 - ADM Wayne Bryan - Removed saving hour to Task data
+Added hour component to Task.due_date - lines:,56
+# 2020-10-04 22:01:48 -0400 - Jeremy Axmacher - Add archive view and clean up job templates list formatting - lines:,107,109,110
+# 2020-10-04 23:16:55 -0700 - Maged Bebawy - Added delete task - lines:,116
+# 2020-10-04 14:05:29 -0700 - Emily Martens - complete snooze functionality and db operations. - lines:,18,90,91,92,94,95,96,97,98,99,100,101,102,103
+# 2020-10-05 12:00:29 -0400 - ADM Wayne Bryan - Removed job template selection for creating single task - lines:,66
+# 2020-10-06 21:05:59 -0400 - J Axmacher - Merge branch 'master' into wayne-task-views - lines:,14,16,21,93
+# 2020-09-19 19:46:10 -0700 - Emily Martens - add snooze and delete views, update styles - lines:,84,105,111,114
+# 2020-10-04 12:16:06 -0700 - Emily Martens - add Snooze form and template fields - lines:,20,82,85,86,88,89,104
 from datetime import datetime, timedelta, time
 import pytz
 
@@ -83,7 +97,8 @@ def snooze(id):
         task.status = TaskStatus.Snoozed
         desc = task.description
         note = form.note.data
-        task.description = desc + "\n" + note
+        task.description = desc + "
+" + note
         db.session.add(task)
         db.session.commit()
         flash("Task Snoozed", 'success')

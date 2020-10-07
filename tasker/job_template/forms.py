@@ -1,3 +1,8 @@
+# 2020-10-04 14:14:23 -0700 - Emily Martens - cleaning up messy code. - lines:,53
+# 2020-09-23 09:56:33 -0700 - Maged Bebawy - started working on forms and models files - lines:,6,9,10,17,46,54,55
+# 2020-10-04 23:26:44 -0400 - Jeremy Axmacher - Add job template deletion - lines:,11,12,13,14,15
+# 2020-09-29 16:36:00 -0400 - Jeremy Axmacher - Add initial job template form and creation logic - lines:,8,16,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,47,48,49,50,51,52,56,57,58,59,60,61,62
+# 2020-09-29 16:36:00 -0400 - Jeremy Axmacher - Clean up job template form and job template detail field formatting - lines:,7,18
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, SelectField, TextAreaField
 from wtforms.fields.html5 import IntegerField, DateField
