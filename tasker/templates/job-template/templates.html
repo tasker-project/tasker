@@ -11,4 +11,9 @@
   </div>
   {% endfor %}
 </section>
+
+{% if not jobs or not jobs.count() == "0" %}
+<h3 align="center">You have no templates. Why not create a <a href="{{ url_for('job_template.add_template') }}">template</a>?</h3>
+{% endif %}
+
 {% endblock %}

@@ -1,10 +1,11 @@
-from datetime import datetime, timedelta
-from flask import Blueprint, render_template, flash, redirect, url_for
+from datetime import datetime, timedelta, time
 import pytz
+
+from flask import Blueprint, render_template, flash, redirect, url_for, request
 from pytz import timezone
 from tasker.models import db, Task, TaskStatus, JobTemplate
 from flask_login import current_user, login_required
-from tasker.task.forms import TaskForm, SnoozeTaskForm
+from tasker.task.forms import TaskForm, SnoozeTaskForm, DeleteTaskForm
 
 bp = Blueprint('task', __name__, static_folder='../static')
 
@@ -76,7 +77,7 @@ def snooze(id):
     if form.validate_on_submit():
         user_tz = timezone(current_user.timezone)
         due = form.due_date.data
-        snooze_date = datetime.datetime.combine(due, datetime.time(task.job_template.hour, 0))
+        snooze_date = datetime.combine(due, time(task.job_template.hour, 0))
         snooze_date = user_tz.localize(snooze_date)
         task.due_date = int(snooze_date.timestamp())
         task.status = TaskStatus.Snoozed
@@ -95,9 +96,17 @@ def archive():
     tasks = Task.query.filter(Task.owner == current_user, Task.status == TaskStatus.Completed)
     return render_template('task/archive.html', title="Archive", tasks=tasks)
 
-@bp.route('/delete_task/<id>')
-#@login_required
+@bp.route('/delete_task/<id>', methods=['GET', 'POST'])
+@login_required
 def delete_task(id):
-    id=id
-    flash("Task deleted: " + id)
-    return redirect(url_for('user.home'))
+    task = Task.query.get(id)
+    form = DeleteTaskForm()
+    if not task.owner == current_user:
+        flash("Unexpected task error. Please try again.", 'error')
+        return redirect(url_for('user.home'))
+    if request.method == 'POST':
+        db.session.delete(task)
+        db.session.commit()
+        flash('Task deleted successfully', 'success')
+        return redirect(url_for('user.home'))
+    return render_template('task/delete_task.html', task=task, id=id, form=form)

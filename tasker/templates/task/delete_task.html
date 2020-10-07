@@ -1,0 +1,20 @@
+{% from "form_errors.html" import field_error %}
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="include">
+  <div class="form-wrapper">
+    <h1>Delete {{ task.name }} ?</h1>
+    <form class="task" action="" method="POST">
+        <p>Description: {{ task.description }}</p>
+        <p>Due: {{ task.due_date | friendly_date_time  }}</p>
+        {{ form.hidden_tag() }}
+        <p class="right">
+            {{ form.submit }} <a class="link-btn" href="{{ url_for('user.home') }}">Cancel</a>
+        </p>
+    </form>
+  </div>
+</section>
+
+{% endblock %}
