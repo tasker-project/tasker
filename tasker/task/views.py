@@ -10,6 +10,7 @@ from tasker.task.forms import TaskForm, SnoozeTaskForm, DeleteTaskForm
 bp = Blueprint('task', __name__, static_folder='../static')
 
 @bp.route('/task_detail/<id>')
+@login_required
 def task_detail(id):
     user = {
     'username': 'test@testing.com', 'email' : 'test@testing.com', 'timezone' : 'EST', 'view' : 'Month'
