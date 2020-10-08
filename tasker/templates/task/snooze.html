@@ -6,11 +6,11 @@
 <section class="include">
   <div class="form-wrapper">
     <h1>Snooze {{ task.name }}</h1>
-    <p>Original Due Date: {{ task.due_date | friendly_date }} at {{ task.job_template.hour | hourify}}</p>
+    <p>Original Due Date: {{ task.due_date | friendly_date }} at {{ hour | hourify}}</p>
     <form class="task" action="" method="POST">
       {{ form.hidden_tag() }}
       <h2>New Due Date</h2>
-      <p>{{ form.due_date(class_='auto-width') }}</p>
+      <p>{{ form.due_date.label }}: {{ form.due_date(class_='auto-width') }} @ {{ form.hour }}</p>
       <p>{{ field_error(form.due_date) }}</p>
       <p>{{ form.note.label }} {{ form.note }}</p>
       <p>{{field_error(form.note) }}</p>
