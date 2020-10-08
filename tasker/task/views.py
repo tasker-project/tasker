@@ -71,6 +71,11 @@ def task_complete(id):
 @login_required
 def snooze(id):
     task = Task.query.get(id)
+    old_ts = datetime.fromtimestamp(
+        task.due_date,
+        tz=pytz.timezone(current_user.timezone)
+    )
+    old_hr = old_ts.hour
     if not task.owner == current_user:
         flash("Unexpected task error. Please try again.", 'error')
         return redirect(url_for('user.home'))
@@ -78,7 +83,8 @@ def snooze(id):
     if form.validate_on_submit():
         user_tz = timezone(current_user.timezone)
         due = form.due_date.data
-        snooze_date = datetime.combine(due, time(task.job_template.hour, 0))
+        hour = int(form.hour.data)
+        snooze_date = datetime.combine(due, time(hour, 0))
         snooze_date = user_tz.localize(snooze_date)
         task.due_date = int(snooze_date.timestamp())
         task.status = TaskStatus.Snoozed
@@ -89,7 +95,7 @@ def snooze(id):
         db.session.commit()
         flash("Task Snoozed", 'success')
         return redirect(url_for('user.home'))
-    return render_template('task/snooze.html', title="Snooze", task=task, form=form)
+    return render_template('task/snooze.html', title="Snooze", task=task, form=form, hour=old_hr)
 
 @bp.route('/archive')
 @login_required
