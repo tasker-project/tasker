@@ -137,12 +137,24 @@ i {
   font-size: 1.5em;
 }
 
+a.pastdue:hover {
+  color: black;
+}
+
+i.pastdue {
+  background-color:black
+}
+
 .complete {
   float: left;
 }
 
 .snooze {
   margin: 1em;
+}
+
+.pastdue {
+  background-color: #ca241c;
 }
 
 #changeView {
