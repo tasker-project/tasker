@@ -117,3 +117,38 @@ def delete_task(id):
         flash('Task deleted successfully', 'success')
         return redirect(url_for('user.home'))
     return render_template('task/delete_task.html', task=task, id=id, form=form)
+
+@bp.route('/details/<id>')
+@login_required
+def details(id):
+    task = Task.query.get(id)
+    if not task.owner == current_user:
+        flash("Unexpected task error. Please try again.", 'error')
+        return redirect(url_for('user.home'))
+    return render_template('task/details.html', title='Task Details', task=task, id=id)
+
+@bp.route('/edit_task/<id>', methods=['GET', 'POST'])
+@login_required
+def edit_task(id):
+    form = TaskForm()
+    task = Task.query.get(id)
+    user_tz = timezone(current_user.timezone)
+    if not task.owner == current_user:
+        flash("Unexpected task error. Please try again.", 'error')
+        return redirect(url_for('user.home'))
+    if request.method == 'GET':
+        form = TaskForm(obj=task)
+        due_date = user_tz.localize(datetime.fromtimestamp(task.due_date))
+        form.due_date.data = due_date.date()
+    if form.validate_on_submit():
+        user_tz = timezone(current_user.timezone)
+        due_date = user_tz.localize(datetime.combine(form.due_date.data, datetime.min.time()))
+        task.name = form.name.data
+        task.description = form.description.data
+        task.due_date =  int(due_date.timestamp())
+        task.hour = form.hour.data
+        db.session.add(task)
+        db.session.commit()
+        flash('Successfully updated task', 'success')
+        return redirect(url_for('task.details', id=task.id))
+    return render_template('task/edit-task.html', title="Edit Task", form=form)
