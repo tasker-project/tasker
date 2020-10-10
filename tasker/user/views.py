@@ -16,7 +16,11 @@ bp = Blueprint('user', __name__, static_folder='../static')
 
 def friendly_date_time(d):
     starting_date = datetime.datetime.fromtimestamp(d, tz=timezone(current_user.timezone))
-    return starting_date.strftime('%B %d, %Y %I:%M %p')
+    day = starting_date.strftime('%B %d, %Y')
+    time = int(starting_date.strftime('%I'))
+    clock_time = starting_date.strftime('%p')
+    date = day + " at " +  str(time) + " " + clock_time
+    return date
 
 
 def split_tasks(tasks, today):
