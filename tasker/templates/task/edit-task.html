@@ -3,7 +3,7 @@
 {% block content %}
 <div class="form-wrapper">
   <h1>Edit Task</h1>
-  <form class="task" action="" method="POST">
+  <form class="task" name="edit-task" action="" method="POST">
       {{ form.hidden_tag() }}
   <p>{{ form.name.label }}:  {{ form.name}} {{ field_error(form.name) }}</p>
   <p>{{ field_error(form.name) }}</p>
