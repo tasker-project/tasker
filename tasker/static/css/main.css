@@ -137,12 +137,16 @@ i {
   font-size: 1.5em;
 }
 
-a.pastdue:hover {
-  color: black;
+.pastdue a.delete {
+  color: #000;
 }
 
-i.pastdue {
-  background-color:black
+.pastdue a.delete:hover {
+  color: #00AAAD;
+}
+
+a.pastdue:hover, i.pastdue:hover {
+  color: black;
 }
 
 .complete {
