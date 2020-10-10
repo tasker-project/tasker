@@ -8,7 +8,7 @@
   <div align="center" class="five task">
     <a href="{{ url_for('task.task_complete', id=task.id) }}"><i class="fas fa-check-square complete"></i></a><br><br>
     <p><strong>Description:</strong> {{ task.description }}</p>
-    <p>Due: <strong>{{ task.due_date | friendly_date_time }} </strong></p>
+    <p class="due-date">Due: <strong>{{ task.due_date | friendly_date_time }} </strong></p>
     <a href="{{ url_for('task.edit_task', id=task.id) }}"> <i style="font-size: 2em;" class="far fa-edit"></i></a>
     <a href="{{ url_for('task.delete_task', id=task.id) }}" class="delete"><i style="font-size: 2em;" class="far fa-trash-alt"></i></a>
 </div>

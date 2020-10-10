@@ -33,6 +33,10 @@ a:hover, i:hover {
   color: #ca241c;
 }
 
+.due-date {
+  font-size: .80em;
+}
+
 nav a, .list-template i, .delete {
   color: #ca241c;
   font-weight: bold;
