@@ -112,7 +112,7 @@ def edit_task(id):
         flash("Unexpected task error. Please try again.", 'error')
         return redirect(url_for('user.home'))
     if request.method == 'GET':
-        due_date = user_tz.localize(datetime.fromtimestamp(task.due_date))
+        due_date = datetime.fromtimestamp(task.due_date, tz=user_tz)
         form = TaskForm(
             name=task.name,
             description=task.description,
