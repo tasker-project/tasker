@@ -122,10 +122,10 @@ def edit_task(id):
     if form.validate_on_submit():
         user_tz = timezone(current_user.timezone)
         due_date = user_tz.localize(datetime.combine(form.due_date.data, datetime.min.time()))
+        due_date = due_date + timedelta(hours=int(form.hour.data))
         task.name = form.name.data
         task.description = form.description.data
         task.due_date =  int(due_date.timestamp())
-        task.hour = form.hour.data
         db.session.add(task)
         db.session.commit()
         flash('Successfully updated task', 'success')
