@@ -1,3 +1,21 @@
+# 2020-10-05 08:28:49 -0400 - ADM Wayne Bryan - Added form to create a single task, /add_task - lines:,19,23,29,30,32,33,34,35,37,38,39,40,41,42,43,44,45
+# 2020-10-04 19:49:38 -0700 - Emily Martens - add completed button, routing. delete old home blueprint and jinja template. - lines:,48,49,50,51,52,53,54,55,56,57,58,59,60,61,63,72
+# 2020-09-19 16:30:14 -0700 - Emily Martens - add task blueprint with routes to task detail - lines:,26,27,28
+# 2020-09-19 19:02:54 -0700 - Emily Martens - add views and navigation for add template, add task, and archive. - lines:,31,47,92,94
+# 2020-10-04 23:10:10 -0700 - Maged Bebawy - Added delete task - lines:,21,98,99,101,103,104,105,106,107,108,109,110,111
+# 2020-10-06 17:24:32 -0400 - ADM Wayne Bryan - Removed saving hour to Task data
+Added hour component to Task.due_date - lines:,36
+# 2020-10-10 21:50:54 -0400 - Jeremy Axmacher - Fix timezone localization - lines:,132
+# 2020-10-04 22:01:48 -0400 - Jeremy Axmacher - Add archive view and clean up job templates list formatting - lines:,93,95,96
+# 2020-10-10 09:54:35 -0400 - Jeremy Axmacher - Fix edit form so that task due hour is populated in form and saved to task. - lines:,133,134,135,136,137,138,142
+# 2020-10-04 23:16:55 -0700 - Maged Bebawy - Added delete task - lines:,102
+# 2020-10-04 14:05:29 -0700 - Emily Martens - complete snooze functionality and db operations. - lines:,22,75,76,77,80,81,82,83,84,85,86,87,88,89
+# 2020-10-08 07:17:14 -0700 - Maged Bebawy - added task details - lines:,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,139,140,141,143,144,145,146,147,148,149,150
+# 2020-10-05 12:00:29 -0400 - ADM Wayne Bryan - Removed job template selection for creating single task - lines:,46
+# 2020-10-06 21:05:59 -0400 - J Axmacher - Merge branch 'master' into wayne-task-views - lines:,18,20,25
+# 2020-10-07 20:15:53 -0700 - Emily Martens - fix snooze to work with template-based and one-time tasks, remove zip folder. - lines:,66,67,68,69,70,78,79,90
+# 2020-09-19 19:46:10 -0700 - Emily Martens - add snooze and delete views, update styles - lines:,64,91,97,100
+# 2020-10-04 12:16:06 -0700 - Emily Martens - add Snooze form and template fields - lines:,24,62,65,71,73,74
 from datetime import datetime, timedelta, time
 import pytz
 
@@ -65,7 +83,8 @@ def snooze(id):
         task.status = TaskStatus.Snoozed
         desc = task.description
         note = form.note.data
-        task.description = desc + "\n" + note
+        task.description = desc + "
+" + note
         db.session.add(task)
         db.session.commit()
         flash("Task Snoozed", 'success')

@@ -1,3 +1,4 @@
+# 2020-09-27 01:43:33 -0400 - Jeremy Axmacher - Add email notifier - lines:,2,3,4,5
 Task Due: {{ task.name }}
 Due Date: {{ due_date }}
 
